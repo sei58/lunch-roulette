@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘의 점심</title>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <style>
+        /* 기본 스타일 (PC 화면에 적합한 간격) */
+        body {
+            margin: 0;
+            font-family: 'Gowun Dodum', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #a8d8ff, #ffffff);
+            color: #333;
+            overflow-x: hidden; /* 가로 스크롤바 제거 */
+        }
+
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px 50px; /* PC 고정 패딩 */
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+            width: 90%; 
+            max-width: 500px; /* PC에서는 최대 너비 제한 */
+            box-sizing: border-box; 
+        }
+
+        .title {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 30px; /* PC 고정 마진 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap; 
+        }
+
+        .title .emoji {
+            font-size: 1.2em;
+            vertical-align: middle;
+            margin: 0 10px; /* PC 고정 마진 */
+        }
+
+        .slot-machine {
+            width: 100%; 
+            height: 100px; /* 슬롯 머신 높이 */
+            border: 5px solid rgb(190, 214, 0);
+            border-radius: 15px;
+            background-color: #fff;
+            margin: 0 auto 30px; /* PC 고정 마진 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* 슬롯 아이템이 이 영역 안에서만 보이도록 */
+            position: relative;
+        }
+
+        .slot-content-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .slot-item {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #555;
+            height: 100px; /* ⭐ 슬롯 아이템 높이 (JavaScript에서 이 값을 동적으로 가져옴) */
+            line-height: 100px; /* 세로 중앙 정렬을 위해 height와 동일하게 */
+            width: 100%;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+        }
+
+        .result-text {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #666;
+            margin-top: 30px; /* PC 고정 마진 */
+            min-height: 30px;
+        }
+
+        .result-restaurant-name {
+            color: rgb(190, 214, 0);
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .button-container {
+            margin-top: 30px; /* PC 고정 마진 */
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* PC 고정 간격 */
+            flex-wrap: nowrap; /* 항상 한 줄에 유지되도록 */
+        }
+
+        .btn {
+            background-color: rgb(190, 214, 0);
+            color: #fff;
+            border: none;
+            padding: 15px 25px; /* PC 고정 패딩 */
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            flex-shrink: 0; /* 버튼이 줄어들지 않도록 방지 */
+        }
+
+        .btn:hover {
+            background-color: rgb(160, 180, 0);
+        }
+
+        .btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+            padding: 20px; /* PC 고정 패딩 */
+            box-sizing: border-box;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 30px; /* PC 고정 패딩 */
+            border: 1px solid #888;
+            border-radius: 15px;
+            width: 80%; /* PC에서는 80% 너비 */
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            box-sizing: border-box;
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px; /* PC 고정 크기 */
+            font-weight: bold;
+            position: absolute;
+            top: 10px; /* PC 고정 위치 */
+            right: 20px; /* PC 고정 위치 */
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #restaurantInput {
+            width: calc(100% - 20px); /* 패딩 고려한 너비 */
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 2px solid rgb(190, 214, 0);
+            border-radius: 8px;
+            font-size: 1em;
+            height: 80px; 
+            resize: vertical;
+            box-sizing: border-box;
+        }
+
+        #addRestaurantToList {
+            margin-top: 10px;
+        }
+
+        #restaurantListEdit {
+            list-style-type: none;
+            padding: 0;
+            max-height: 300px; /* PC 고정 높이 */
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        #restaurantListEdit li {
+            background-color: #f0f0f0;
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            display: flex; /* ⭐ Flexbox 활성화 */
+            justify-content: space-between; /* ⭐ 요소들을 양 끝으로 정렬 */
+            align-items: center; /* ⭐ 세로 중앙 정렬 */
+            font-size: 1.1em;
+            flex-wrap: nowrap; /* ⭐ 식당 이름과 버튼 묶음이 줄 바꿈 되지 않도록 */
+        }
+
+        #restaurantListEdit li span {
+            flex-grow: 1; /* ⭐ 식당 이름이 가능한 공간을 채우도록 */
+            margin-right: 10px; 
+            word-break: break-all; 
+            overflow-wrap: break-word; 
+        }
+        
+        /* ⭐ 버튼들을 감싸는 새로운 래퍼 추가 */
+        #restaurantListEdit li .button-wrapper {
+            display: flex;
+            gap: 5px; /* 버튼 사이 간격 */
+            flex-shrink: 0; /* 버튼 묶음이 줄어들지 않도록 */
+        }
+
+        #restaurantListEdit li .edit-btn,
+        #restaurantListEdit li .delete-btn {
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            white-space: nowrap; /* ⭐ 버튼 텍스트 줄 바꿈 방지 */
+            min-width: 45px; /* 버튼 최소 너비 확보 (텍스트 줄바꿈 방지와 함께 적용) */
+        }
+
+        #restaurantListEdit li .edit-btn {
+            background-color: #009FDA; 
+        }
+
+        #restaurantListEdit li .edit-btn:hover {
+            background-color: #007bb3;
+        }
+
+        #restaurantListEdit li .delete-btn {
+            background-color: #641F45; 
+        }
+
+        #restaurantListEdit li .delete-btn:hover {
+            background-color: #4a1733;
+        }
+
+        #restaurantListEdit li .edit-input {
+            width: calc(100% - 120px); /* PC 고정 너비 (버튼 너비 고려) */
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        /* --- 미디어 쿼리: 작은 화면 (모바일)에 대한 최적화 --- */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.5em 1em; 
+                width: 95%; 
+            }
+
+            .title {
+                font-size: 1.8em; 
+                margin-bottom: 1em; 
+            }
+            .title .emoji {
+                font-size: 1em;
+                margin: 0 0.3em;
+            }
+
+            .slot-machine {
+                height: 80px; 
+                border-width: 3px; 
+                margin-bottom: 1.5em; 
+            }
+
+            .slot-item {
+                font-size: 1.2em; 
+                height: 80px; 
+                line-height: 80px;
+            }
+
+            .result-text {
+                font-size: 1.2em; 
+                margin-top: 1.5em; 
+            }
+
+            .btn {
+                padding: 0.7em 1em; 
+                font-size: 0.9em; 
+                flex-grow: 1; 
+            }
+
+            .button-container {
+                gap: 0.5em; 
+                margin-top: 1.5em; 
+            }
+
+            .modal {
+                padding: 1em; 
+            }
+
+            .modal-content {
+                padding: 1.5em; 
+                width: 90%; 
+            }
+            
+            .close-button {
+                font-size: 1.8em;
+                top: 0.5em;
+                right: 0.8em;
+            }
+
+            #restaurantInput {
+                padding: 0.6em;
+                margin-bottom: 1em;
+                height: 5em;
+            }
+
+            #restaurantListEdit {
+                max-height: 40vh; 
+            }
+
+            #restaurantListEdit li {
+                /* ⭐ flex-direction: column; 제거 - 한 줄 유지를 위해 */
+                align-items: center; /* ⭐ 세로 중앙 정렬 유지 */
+                margin-bottom: 0.8em;
+                padding: 0.8em 1em;
+            }
+
+            #restaurantListEdit li span {
+                margin-bottom: 0; /* ⭐ 불필요한 마진 제거 */
+                margin-right: 0.5em; /* ⭐ 식당 이름과 버튼 사이 간격 */
+                flex-grow: 1; /* ⭐ 식당 이름이 가능한 공간을 채우도록 */
+                min-width: 0; /* 텍스트가 넘칠 경우 줄바꿈이 아닌 생략되도록 */
+            }
+
+            #restaurantListEdit li .button-wrapper {
+                /* ⭐ flex-shrink: 0; 이 이미 적용되어 있어 줄어들지 않음 */
+                /* width: auto; 버튼들이 내용에 맞게 자동 조절되도록 */
+            }
+            
+            #restaurantListEdit li .edit-btn,
+            #restaurantListEdit li .delete-btn {
+                font-size: 0.8em; /* 모바일에서 버튼 글자 크기 조금 더 줄임 */
+                padding: 0.4em 0.7em; /* 모바일에서 버튼 패딩 줄임 */
+                /* min-width: auto; - nowrap 때문에 자동 조절됨 */
+            }
+
+            #restaurantListEdit li .edit-input {
+                width: calc(100% - 100px); /* 모바일 버튼 너비 고려 */
+                padding: 0.4em;
+                margin-bottom: 0; /* 마진 제거 */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">
+            <span class="emoji">✈️</span>
+            오늘의 점심
+            <span class="emoji">✈️</span>
+        </h1>
+
+        <div class="slot-machine">
+            <div class="slot-content-wrapper"></div>
+        </div>
+
+        <p class="result-text"></p>
+
+        <div class="button-container">
+            <button id="spinButton" class="btn">돌리기</button>
+            <button id="addButton" class="btn">추가하기</button>
+            <button id="editButton" class="btn">목록편집</button>
+        </div>
+    </div>
+
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>식당 추가하기</h2>
+            <textarea id="restaurantInput" placeholder="식당 이름을 콤마(,) 또는 줄 띄움으로 구분하여 입력하세요."></textarea>
+            <button id="addRestaurantToList" class="btn">추가</button>
+        </div>
+    </div>
+
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>식당 목록 편집</h2>
+            <ul id="restaurantListEdit"></ul>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slotMachine = document.querySelector('.slot-machine');
+            const slotContentWrapper = document.querySelector('.slot-content-wrapper');
+            const resultText = document.querySelector('.result-text');
+            const spinButton = document.getElementById('spinButton');
+            const addButton = document.getElementById('addButton');
+            const editButton = document.getElementById('editButton');
+
+            const addModal = document.getElementById('addModal');
+            const editModal = document.getElementById('editModal');
+            const closeButtons = document.querySelectorAll('.close-button');
+            const restaurantInput = document.getElementById('restaurantInput'); 
+            const addRestaurantToListButton = document.getElementById('addRestaurantToList');
+            const restaurantListEdit = document.getElementById('restaurantListEdit');
+
+            let restaurants = []; 
+            let itemHeight = 0; 
+            let isSpinning = false; 
+
+            const defaultRestaurants = [
+                '락감 감자탕', '뚜부집', '고향옥', '엄마손식당', '부대옥', '본죽앤비빔밥', '찌미오', '월수금 통돼지 김치찌개',
+                '미숯랭', '하루', '소곤', '대가원', '사위식당', '오국밥', '마장동 박사장', '신의한국수',
+                '명동칼국수', '초애삼계탕', '어달스시', '짬뽕지존', '오모이', '계단라멘', 
+                '민여활영공장', '초이다이닝', '란콰이펑누들', '오레노카츠', '힐베이글', '고릴라쉐프', '저스트 샐러드', 
+                '노브랜드 버거', '파리바게트', '소담김밥', '헤비스테이크', '슬로우캘리', '훅트포케', '버거킹', '샐모닝', 
+                '보영만두', '소풍가는날', '베이스타코', '올라포케', '올바른 분식'
+            ];
+
+            function loadRestaurants() {
+                const storedRestaurants = localStorage.getItem('restaurants');
+                if (storedRestaurants) {
+                    restaurants = JSON.parse(storedRestaurants);
+                } else {
+                    restaurants = [...defaultRestaurants]; 
+                    saveRestaurants(); 
+                }
+                renderSlotItems(); 
+            }
+
+            function saveRestaurants() {
+                localStorage.setItem('restaurants', JSON.stringify(restaurants));
+            }
+
+            function renderSlotItems() {
+                slotContentWrapper.innerHTML = ''; 
+
+                if (restaurants.length === 0) {
+                    const defaultItem = document.createElement('div');
+                    defaultItem.classList.add('slot-item');
+                    defaultItem.textContent = '식당을 추가해주세요!';
+                    slotContentWrapper.appendChild(defaultItem);
+                    gsap.set(slotContentWrapper, { y: 0 }); 
+                    itemHeight = defaultItem.offsetHeight; 
+                    return;
+                }
+
+                const repeatCount = 10; 
+                for (let i = 0; i < repeatCount; i++) {
+                    restaurants.forEach(restaurant => {
+                        const div = document.createElement('div');
+                        div.classList.add('slot-item');
+                        div.textContent = restaurant;
+                        slotContentWrapper.appendChild(div);
+                    });
+                }
+                
+                // 첫 번째 아이템의 높이를 측정하여 itemHeight 설정 (렌더링 후 정확한 값)
+                // 이 시점에는 이미 슬롯 아이템들이 DOM에 추가되어 있으므로 정확한 높이를 얻을 수 있습니다.
+                itemHeight = slotContentWrapper.querySelector('.slot-item').offsetHeight;
+                gsap.set(slotContentWrapper, { y: 0 }); 
+            }
+
+            spinButton.addEventListener('click', () => {
+                if (restaurants.length === 0) {
+                    alert('식당 목록이 비어있습니다. 식당을 추가해주세요!');
+                    return;
+                }
+                if (isSpinning) { 
+                    return;
+                }
+
+                isSpinning = true; 
+                spinButton.disabled = true; 
+                resultText.innerHTML = ''; 
+
+                gsap.killTweensOf(slotContentWrapper); 
+                gsap.set(slotContentWrapper, { y: 0 }); 
+
+                const totalOriginalItems = restaurants.length; 
+                const selectedOriginalIndex = Math.floor(Math.random() * totalOriginalItems); 
+                
+                const revolutions = 5; 
+                const finalTargetIndex = (revolutions * totalOriginalItems) + selectedOriginalIndex;
+                
+                const targetY = -finalTargetIndex * itemHeight;
+
+                gsap.to(slotContentWrapper, {
+                    y: targetY,
+                    duration: 5, 
+                    ease: "power4.out", 
+                    overwrite: "auto", 
+                    onComplete: () => {
+                        const currentY = gsap.getProperty(slotContentWrapper, "y");
+                        // 멈춘 위치에서 가장 가까운 아이템의 인덱스를 계산 (양수 값으로 변환 후)
+                        const stoppedItemIndex = Math.round(Math.abs(currentY) / itemHeight);
+                        const actualSelectedRestaurantIndex = stoppedItemIndex % totalOriginalItems;
+                        const actualSelectedRestaurant = restaurants[actualSelectedRestaurantIndex];
+
+                        resultText.innerHTML = `오늘은 <span class="result-restaurant-name">${actualSelectedRestaurant}</span>에서 먹어요!`;
+                        spinButton.disabled = false; 
+                        isSpinning = false; 
+                        
+                        // 애니메이션 완료 후, 슬롯 띠를 당첨된 식당이 정확히 중앙에 오도록 위치 조정
+                        // (애니메이션 완료 후 미세한 오차가 있을 수 있으므로 재조정)
+                        // 이렇게 하면 다음 스핀을 시작할 때 초기 위치가 깔끔하게 유지됩니다.
+                        gsap.set(slotContentWrapper, { y: -(revolutions * totalOriginalItems + selectedOriginalIndex) * itemHeight });
+                    }
+                });
+            });
+
+            addRestaurantToListButton.addEventListener('click', () => {
+                const inputText = restaurantInput.value.trim();
+                if (inputText) {
+                    const newRestaurants = inputText.split(/[\n,]+/).map(item => item.trim()).filter(item => item.length > 0);
+                    let addedCount = 0;
+
+                    newRestaurants.forEach(newRestaurant => {
+                        if (newRestaurant && !restaurants.includes(newRestaurant)) { 
+                            restaurants.push(newRestaurant);
+                            addedCount++;
+                        }
+                    });
+
+                    if (addedCount > 0) {
+                        saveRestaurants(); 
+                        renderSlotItems(); 
+                        alert(`${addedCount}개의 식당이 목록에 추가되었습니다!`);
+                        addModal.style.display = 'none'; 
+                    } else if (newRestaurants.length > 0) {
+                        alert('이미 존재하는 식당이거나 유효하지 않은 입력입니다.');
+                    } else {
+                        alert('식당 이름을 입력해주세요.');
+                    }
+                } else {
+                    alert('식당 이름을 입력해주세요.');
+                }
+            });
+
+            addButton.addEventListener('click', () => {
+                addModal.style.display = 'flex';
+                restaurantInput.value = '';
+                restaurantInput.focus();
+            });
+
+            editButton.addEventListener('click', () => {
+                renderEditList(); 
+                editModal.style.display = 'flex';
+            });
+
+            function renderEditList() {
+                restaurantListEdit.innerHTML = ''; 
+                if (restaurants.length === 0) {
+                    restaurantListEdit.innerHTML = '<li>등록된 식당이 없습니다.</li>';
+                    return;
+                }
+                restaurants.forEach((restaurant, index) => {
+                    const listItem = document.createElement('li');
+                    const span = document.createElement('span');
+                    span.textContent = restaurant;
+                    listItem.appendChild(span);
+
+                    // ⭐ 버튼들을 감싸는 새로운 래퍼 추가
+                    const buttonWrapper = document.createElement('div'); 
+                    buttonWrapper.classList.add('button-wrapper');
+                    
+                    const editButton = document.createElement('button');
+                    editButton.classList.add('edit-btn');
+                    editButton.textContent = '수정';
+                    editButton.dataset.index = index;
+                    buttonWrapper.appendChild(editButton);
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.classList.add('delete-btn');
+                    deleteButton.textContent = '삭제';
+                    deleteButton.dataset.index = index;
+                    buttonWrapper.appendChild(deleteButton);
+
+                    listItem.appendChild(buttonWrapper); 
+                    restaurantListEdit.appendChild(listItem);
+                });
+
+                document.querySelectorAll('.edit-btn').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const indexToEdit = parseInt(e.target.dataset.index);
+                        const listItem = e.target.closest('li');
+                        const restaurantSpan = listItem.querySelector('span');
+                        const originalName = restaurantSpan.textContent;
+
+                        const inputField = document.createElement('input');
+                        inputField.type = 'text';
+                        inputField.classList.add('edit-input');
+                        inputField.value = originalName;
+
+                        listItem.replaceChild(inputField, restaurantSpan);
+                        inputField.focus(); 
+
+                        const saveChanges = () => {
+                            const newName = inputField.value.trim();
+                            if (newName && newName !== originalName) {
+                                if (!restaurants.includes(newName)) { 
+                                    restaurants[indexToEdit] = newName;
+                                    saveRestaurants();
+                                    renderEditList(); 
+                                    renderSlotItems(); 
+                                } else {
+                                    alert('이미 존재하는 이름입니다. 다른 이름을 입력해주세요.');
+                                    // 다시 원래 span으로 되돌림
+                                    const tempSpan = document.createElement('span');
+                                    tempSpan.textContent = originalName;
+                                    listItem.replaceChild(tempSpan, inputField);
+                                }
+                            } else {
+                                // 변경사항이 없거나 입력이 비어있으면 원래대로 되돌림
+                                const tempSpan = document.createElement('span');
+                                tempSpan.textContent = originalName;
+                                listItem.replaceChild(tempSpan, inputField);
+                            }
+                        };
+
+                        inputField.addEventListener('keypress', (event) => {
+                            if (event.key === 'Enter') {
+                                saveChanges();
+                            }
+                        });
+
+                        inputField.addEventListener('blur', () => {
+                            saveChanges();
+                        });
+                    });
+                });
+
+                document.querySelectorAll('.delete-btn').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const indexToDelete = parseInt(e.target.dataset.index);
+                        const deletedRestaurant = restaurants[indexToDelete];
+                        if (confirm(`${deletedRestaurant}을(를) 정말 삭제하시겠습니까?`)) {
+                            restaurants.splice(indexToDelete, 1); 
+                            saveRestaurants(); 
+                            renderEditList(); 
+                            renderSlotItems(); 
+                        }
+                    });
+                });
+            }
+
+            closeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    addModal.style.display = 'none';
+                    editModal.style.display = 'none';
+                });
+            });
+
+            window.addEventListener('click', (event) => {
+                if (event.target === addModal) {
+                    addModal.style.display = 'none';
+                }
+                if (event.target === editModal) {
+                    editModal.style.display = 'none';
+                }
+            });
+
+            loadRestaurants();
+            // 폰트 로드 완료 후 정확한 itemHeight를 다시 측정 (선택 사항이지만 정확도를 높임)
+            window.addEventListener('load', () => {
+                if (slotContentWrapper.querySelector('.slot-item')) {
+                    itemHeight = slotContentWrapper.querySelector('.slot-item').offsetHeight;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
