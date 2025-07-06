@@ -11,7 +11,6 @@
             margin: 0;
             font-family: 'Gowun Dodum', sans-serif;
             display: flex;
-            flex-direction: column; /* Changed to column to stack main content and footer */
             justify-content: center;
             align-items: center;
             min-height: 100vh;
@@ -31,7 +30,6 @@
             width: 90%;
             max-width: 500px; /* PC에서는 최대 너비 제한 */
             box-sizing: border-box;
-            margin-bottom: 20px; /* Add margin to separate from footer */
         }
 
         .title {
@@ -319,15 +317,6 @@
             font-size: 1.2em;
         }
 
-        /* Footer Styles */
-        .footer {
-            margin-top: auto; /* Pushes the footer to the bottom */
-            padding: 15px 0;
-            text-align: center;
-            color: #777;
-            font-size: 0.9em;
-            width: 100%;
-        }
 
         /* --- 미디어 쿼리: 작은 화면 (모바일)에 대한 최적화 --- */
         @media (max-width: 600px) {
@@ -407,6 +396,7 @@
             }
 
             #restaurantListEdit li {
+                /* ⭐ flex-direction: column; 제거 - 한 줄 유지를 위해 */
                 align-items: center; /* ⭐ 세로 중앙 정렬 유지 */
                 margin-bottom: 0.8em;
                 padding: 0.8em 1em;
@@ -419,10 +409,16 @@
                 min-width: 0; /* 텍스트가 넘칠 경우 줄바꿈이 아닌 생략되도록 */
             }
 
+            #restaurantListEdit li .button-wrapper {
+                /* ⭐ flex-shrink: 0; 이 이미 적용되어 있어 줄어들지 않음 */
+                /* width: auto; 버튼들이 내용에 맞게 자동 조절되도록 */
+            }
+
             #restaurantListEdit li .edit-btn,
             #restaurantListEdit li .delete-btn {
                 font-size: 0.8em; /* 모바일에서 버튼 글자 크기 조금 더 줄임 */
                 padding: 0.4em 0.7em; /* 모바일에서 버튼 패딩 줄임 */
+                /* min-width: auto; - nowrap 때문에 자동 조절됨 */
             }
 
             #restaurantListEdit li .edit-input {
@@ -461,10 +457,6 @@
             <button id="editButton" class="btn">목록편집</button>
         </div>
     </div>
-    
-    <footer class="footer">
-        <p>&copy; 2025 인사전략팀 인턴 한세진</p>
-    </footer>
 
     <div id="addModal" class="modal">
         <div class="modal-content">
@@ -519,7 +511,7 @@
             let isSpinning = false;
 
             const defaultRestaurants = [
-                '샐모닝', '센몬텐', '제이그램', '초애삼계탕', '하우슬리', '헤리스헤이스', '여가반상', 
+                 '샐모닝', '센몬텐', '제이그램', '초애삼계탕', '하우슬리', '헤리스헤이스', '여가반상', 
                 '스타벅스', '베어스타코', '파리바게뜨', '코코의 식탁', '오국밥', '보영만두', '한소쿰', 
                 '오지오커피', '소풍가는날', '나이스카페인클럽', '저스트샐러드', '올라포케', '찌미오', 
                 '커피사피엔스', '월수금', '꽈리칼국수', '본도시락', '계단라멘', '신의한국수', '훅트포케', 
