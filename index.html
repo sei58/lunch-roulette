@@ -511,54 +511,17 @@
             let isSpinning = false;
 
             const defaultRestaurants = [
-                '락감 감자탕', '뚜부집', '고향옥', '엄마손식당', '부대옥', '본죽앤비빔밥', '찌미오', '월수금 통돼지 김치찌개',
-                '미숯랭', '하루', '소곤', '대가원', '사위식당', '오국밥', '마장동 박사장', '신의한국수',
-                '명동칼국수', '초애삼계탕', '어달스시', '짬뽕지존', '오모이', '계단라멘',
-                '민영활어공장', '초이다이닝', '란콰이펑누들', '오레노카츠', '힐베이글', '고릴라쉐프', '저스트 샐러드',
-                '노브랜드 버거', '파리바게트', '소담김밥', '헤비스테이크', '슬로우캘리', '훅트포케', '버거킹', '샐모닝',
-                '보영만두', '소풍가는날', '베이스타코', '올라포케', '올바른 분식'
-                '샐모닝', '센몬텐, 제이그램, 초애삼계탕(마곡점), 하우슬리, 헤리스헤이스, 여가반상, 스타벅스(마곡역점), 베어스타코(마곡점), 파리바게뜨(마곡역점), 코코의 식탁, 오국밥(마곡점), 보영만두(마곡점), 한소쿰, 오지오커피, 소풍가는날(마곡점), 나이스카페인클럽(마곡점), 저스트샐러드(마곡점), 올라포케(마곡점), 찌미오, 커피사피엔스(마곡이너매스점), 월수금, 꽈리칼국수, 본도시락(마곡나루점), 계단라멘, 신의한국수(마곡점), 훅트포케(마곡점), 육채미, 영미당 닭갈비, 엄마손뷔페, 돈태백, 마곡회관, 힐 베이글, 앤덴커피, 대가원(마곡점), 명동칼국수, 중식당 청가, 화월, 홍콩반점(발산역점), 카페디얼, 이자카야 하루, 마곡동소담김밥, 고릴라쉐프(마곡점), SO GON, 로스터리락온(마곡1호점), 민영활어공장(마곡직영점), 조선부뚜막(마곡점), 울동네뚜부집, 어달스시, 부대옥         <ul id="restaurantListEdit"></ul>
-        </div>
-    </div>
-
-    <div id="helpModal" class="modal">
-        <div class="modal-content help-modal-content">
-            <span class="close-button">&times;</span>
-            <h2>오늘의 점심 룰렛 🍽️</h2>
-            <p><span class="emoji">🤔</span> 뭘 먹을지 고민될 때, '돌리기' 버튼을 눌러 점심 식당을 정해보세요!</p>
-            <p><span class="emoji">➕</span> 새로운 식당을 추가하고 싶다면 '추가하기' 버튼을 눌러 목록에 추가할 수 있어요!</p>
-            <p><span class="emoji">✏️</span> 기존 식당 목록을 수정하거나 삭제하고 싶다면 '목록 편집' 버튼을 활용하세요!</p>
-            <p><span class="emoji">✨</span> 모든 식당의 당첨 확률은 동일합니다!</p>
-            <p><span class="emoji">🔄</span> 앱 업데이트 내용이 반영되지 않는다면, 브라우저 새로고침이나 쿠키/사이트 데이터를 삭제해보세요!</p>
-        </div>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const slotMachine = document.querySelector('.slot-machine');
-            const slotContentWrapper = document.querySelector('.slot-content-wrapper');
-            const resultText = document.querySelector('.result-text');
-            const spinButton = document.getElementById('spinButton');
-            const addButton = document.getElementById('addButton');
-            const editButton = document.getElementById('editButton');
-            const helpButton = document.getElementById('helpButton'); // Help button
-
-            const addModal = document.getElementById('addModal');
-            const editModal = document.getElementById('editModal');
-            const helpModal = document.getElementById('helpModal'); // Help modal
-            const closeButtons = document.querySelectorAll('.close-button');
-            const restaurantInput = document.getElementById('restaurantInput');
-            const addRestaurantToListButton = document.getElementById('addRestaurantToList');
-            const restaurantListEdit = document.getElementById('restaurantListEdit');
-
-            let restaurants = [];
-            let itemHeight = 0;
-            let isSpinning = false;
-
-            const defaultRestaurants = [
-                '샐모닝', '센몬텐', '제이그램', '초애삼계탕', '하우슬리', '헤리스헤이스', '여가반상', '베어스타코', '파리바게뜨', '코코의 식탁', '오국밥', '보영만두', '한소쿰', '오지오커피', '소풍가는날', '나이스카페인클럽', '저스트샐러드', '올라포케', '찌미오', '커피사피엔스', '월수금', '꽈리칼국수', '본도시락', '계단라멘', '신의한국수', '훅트포케', '육채미', '영미당 닭갈비', '엄마손뷔페', '돈태백', '마곡회관', '힐 베이글', '앤덴커피', '대가원', '명동칼국수', '중식당 청가', '화월', '홍콩반점', '카페디얼', '이자카야 하루', '마곡동소담김밥', '고릴라쉐프', 'SO GON', '로스터리락온', '민영활어공장', '조선부뚜막', '울동네뚜부집', '어달스시', '부대옥', '순대실록', '오모이', '설반', '사위식당', '진마루', '짬뽕지존', '버거킹', '헤비스테이크', '미숯랭', '샐러디', '스타벅스', '초이다이닝', '란콰이펑누들', '시도니아', '후라토식당', '당산포차 점심뷔페', '콜트클럽', '본죽&비빔밥cafe', '컴포즈커피', '샐러디', '종로계림닭도리탕원조', '박가부대', '전주현대옥'
-
+                 '샐모닝', '센몬텐', '제이그램', '초애삼계탕', '하우슬리', '헤리스헤이스', '여가반상', 
+                '스타벅스', '베어스타코', '파리바게뜨', '코코의 식탁', '오국밥', '보영만두', '한소쿰', 
+                '오지오커피', '소풍가는날', '나이스카페인클럽', '저스트샐러드', '올라포케', '찌미오', 
+                '커피사피엔스', '월수금', '꽈리칼국수', '본도시락', '계단라멘', '신의한국수', '훅트포케', 
+                '육채미', '영미당 닭갈비', '엄마손뷔페', '돈태백', '마곡회관', '힐 베이글', '앤덴커피', 
+                '대가원', '명동칼국수', '중식당 청가', '화월', '홍콩반점', '카페디얼', '이자카야 하루', 
+                '마곡동소담김밥', '고릴라쉐프', 'SO GON', '로스터리락온', '민영활어공장', '조선부뚜막', 
+                '울동네뚜부집', '어달스시', '부대옥', '순대실록', '스타벅스', '오모이', '설반', '사위식당', 
+                '진마루', '짬뽕지존', '버거킹(마곡점)', '헤비스테이크', '미숯랭', '샐러디', '초이다이닝', 
+                '란콰이펑누들', '시도니아', '후라토식당', '당산포차 점심뷔페', '콜트클럽', '본죽&비빔밥cafe', 
+                '컴포즈커피', '샐러디', '종로계림닭도리탕원조', '박가부대', '전주현대옥'
             ];
 
             function loadRestaurants() {
