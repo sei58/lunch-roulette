@@ -11,39 +11,39 @@
             margin: 0;
             font-family: 'Gowun Dodum', sans-serif;
             display: flex;
-            flex-direction: column; /* 푸터를 하단에 고정하기 위해 column으로 변경 */
-            justify-content: space-between; /* 메인 콘텐츠와 푸터 사이 공간 분배 */
+            flex-direction: column;
+            justify-content: center; /* ⭐ 콘텐츠가 세로 중앙에 오도록 변경 */
             align-items: center;
             min-height: 100vh;
             background: linear-gradient(to bottom, #a8d8ff, #ffffff);
             color: #333;
-            overflow-x: hidden; /* 가로 스크롤바 제거 */
+            overflow-x: hidden;
         }
 
         .container {
             text-align: center;
             background-color: rgba(255, 255, 255, 0.9);
-            padding: 30px 50px; /* PC 고정 패딩 */
+            padding: 30px 50px;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             position: relative;
             z-index: 1;
             width: 90%;
-            max-width: 500px; /* PC에서는 최대 너비 제한 */
+            max-width: 500px;
             box-sizing: border-box;
-            flex-grow: 1; /* 컨테이너가 가능한 공간을 차지하도록 하여 푸터가 아래로 밀려나게 함 */
-            display: flex; /* 내부 요소들을 중앙 정렬하기 위해 추가 */
-            flex-direction: column; /* 내부 요소들을 세로로 정렬 */
-            justify-content: center; /* 내부 요소들을 세로 중앙 정렬 */
-            margin-top: 20px; /* 상단 여백 추가 */
-            margin-bottom: 20px; /* 하단 여백 추가 */
+            /* flex-grow: 1; ⭐ 이 속성을 제거하여 높이가 콘텐츠에 맞춰지도록 함 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
         }
 
         .title {
             font-size: 2.5em;
             font-weight: bold;
             color: #333;
-            margin-bottom: 30px; /* PC 고정 마진 */
+            margin-bottom: 20px; /* ⭐ 마진 감소 */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -53,20 +53,20 @@
         .title .emoji {
             font-size: 1.2em;
             vertical-align: middle;
-            margin: 0 10px; /* PC 고정 마진 */
+            margin: 0 10px;
         }
 
         .slot-machine {
             width: 100%;
-            height: 100px; /* 슬롯 머신 높이 */
+            height: 100px;
             border: 5px solid rgb(190, 214, 0);
             border-radius: 15px;
             background-color: #fff;
-            margin: 0 auto 30px; /* PC 고정 마진 */
+            margin: 0 auto 20px; /* ⭐ 마진 감소 */
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden; /* 슬롯 아이템이 이 영역 안에서만 보이도록 */
+            overflow: hidden;
             position: relative;
         }
 
@@ -84,8 +84,8 @@
             font-size: 1.4em;
             font-weight: bold;
             color: #555;
-            height: 100px; /* ⭐ 슬롯 아이템 높이 (JavaScript에서 이 값을 동적으로 가져옴) */
-            line-height: 100px; /* 세로 중앙 정렬을 위해 height와 동일하게 */
+            height: 100px;
+            line-height: 100px;
             width: 100%;
             text-align: center;
             white-space: nowrap;
@@ -97,7 +97,7 @@
             font-size: 1.5em;
             font-weight: bold;
             color: #666;
-            margin-top: 30px; /* PC 고정 마진 */
+            margin-top: 20px; /* ⭐ 마진 감소 */
             min-height: 30px;
         }
 
@@ -108,25 +108,25 @@
         }
 
         .button-container {
-            margin-top: 30px; /* PC 고정 마진 */
+            margin-top: 20px; /* ⭐ 마진 감소 */
             display: flex;
             justify-content: center;
-            gap: 20px; /* PC 고정 간격 */
-            flex-wrap: nowrap; /* 항상 한 줄에 유지되도록 */
+            gap: 20px;
+            flex-wrap: nowrap;
         }
 
         .btn {
             background-color: rgb(190, 214, 0);
             color: #fff;
             border: none;
-            padding: 15px 25px; /* PC 고정 패딩 */
+            padding: 15px 25px;
             border-radius: 10px;
             font-size: 1.2em;
             font-weight: bold;
             cursor: pointer;
             transition: background-color 0.3s ease;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            flex-shrink: 0; /* 버튼이 줄어들지 않도록 방지 */
+            flex-shrink: 0;
         }
 
         .btn:hover {
@@ -157,7 +157,7 @@
             align-items: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             transition: background-color 0.3s ease;
-            z-index: 2; /* Ensure it's above other elements but below modals */
+            z-index: 2;
         }
 
         .help-button:hover {
@@ -177,17 +177,17 @@
             background-color: rgba(0,0,0,0.4);
             justify-content: center;
             align-items: center;
-            padding: 20px; /* PC 고정 패딩 */
+            padding: 20px;
             box-sizing: border-box;
         }
 
         .modal-content {
             background-color: #fefefe;
             margin: auto;
-            padding: 30px; /* PC 고정 패딩 */
+            padding: 30px;
             border: 1px solid #888;
             border-radius: 15px;
-            width: 80%; /* PC에서는 80% 너비 */
+            width: 80%;
             max-width: 500px;
             text-align: center;
             position: relative;
@@ -198,11 +198,11 @@
         .close-button {
             color: #aaa;
             float: right;
-            font-size: 28px; /* PC 고정 크기 */
+            font-size: 28px;
             font-weight: bold;
             position: absolute;
-            top: 10px; /* PC 고정 위치 */
-            right: 20px; /* PC 고정 위치 */
+            top: 10px;
+            right: 20px;
         }
 
         .close-button:hover,
@@ -213,7 +213,7 @@
         }
 
         #restaurantInput {
-            width: calc(100% - 20px); /* 패딩 고려한 너비 */
+            width: calc(100% - 20px);
             padding: 10px;
             margin-bottom: 20px;
             border: 2px solid rgb(190, 214, 0);
@@ -231,7 +231,7 @@
         #restaurantListEdit {
             list-style-type: none;
             padding: 0;
-            max-height: 300px; /* PC 고정 높이 */
+            max-height: 300px;
             overflow-y: auto;
             text-align: left;
         }
@@ -241,25 +241,24 @@
             margin-bottom: 10px;
             padding: 10px 15px;
             border-radius: 8px;
-            display: flex; /* ⭐ Flexbox 활성화 */
-            justify-content: space-between; /* ⭐ 요소들을 양 끝으로 정렬 */
-            align-items: center; /* ⭐ 세로 중앙 정렬 */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             font-size: 1.1em;
-            flex-wrap: nowrap; /* ⭐ 식당 이름과 버튼 묶음이 줄 바꿈 되지 않도록 */
+            flex-wrap: nowrap;
         }
 
         #restaurantListEdit li span {
-            flex-grow: 1; /* ⭐ 식당 이름이 가능한 공간을 채우도록 */
+            flex-grow: 1;
             margin-right: 10px;
             word-break: break-all;
             overflow-wrap: break-word;
         }
 
-        /* ⭐ 버튼들을 감싸는 새로운 래퍼 추가 */
         #restaurantListEdit li .button-wrapper {
             display: flex;
-            gap: 5px; /* 버튼 사이 간격 */
-            flex-shrink: 0; /* 버튼 묶음이 줄어들지 않도록 */
+            gap: 5px;
+            flex-shrink: 0;
         }
 
         #restaurantListEdit li .edit-btn,
@@ -270,8 +269,8 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 0.9em;
-            white-space: nowrap; /* ⭐ 버튼 텍스트 줄 바꿈 방지 */
-            min-width: 45px; /* 버튼 최소 너비 확보 (텍스트 줄바꿈 방지와 함께 적용) */
+            white-space: nowrap;
+            min-width: 45px;
         }
 
         #restaurantListEdit li .edit-btn {
@@ -291,7 +290,7 @@
         }
 
         #restaurantListEdit li .edit-input {
-            width: calc(100% - 120px); /* PC 고정 너비 (버튼 너비 고려) */
+            width: calc(100% - 120px);
             padding: 5px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -327,25 +326,26 @@
         /* Footer Styles */
         .footer {
             width: 100%;
-            padding: 15px 0;
+            padding: 10px 0; /* ⭐ 패딩 감소 */
             text-align: center;
             color: #777;
             font-size: 0.9em;
-            flex-shrink: 0; /* 푸터가 줄어들지 않도록 방지 */
+            flex-shrink: 0;
+            margin-top: 15px; /* ⭐ 컨테이너와의 간격 조절 */
         }
 
         /* --- 미디어 쿼리: 작은 화면 (모바일)에 대한 최적화 --- */
         @media (max-width: 600px) {
             .container {
-                padding: 1.5em 1em;
+                padding: 1.2em 0.8em; /* ⭐ 모바일 패딩 감소 */
                 width: 95%;
-                margin-top: 10px; /* 모바일 상단 여백 줄임 */
-                margin-bottom: 10px; /* 모바일 하단 여백 줄임 */
+                margin-top: 15px; /* ⭐ 모바일 상단 여백 조절 */
+                margin-bottom: 15px; /* ⭐ 모바일 하단 여백 조절 */
             }
 
             .title {
                 font-size: 1.8em;
-                margin-bottom: 1em;
+                margin-bottom: 1em; /* ⭐ 마진 조절 */
             }
             .title .emoji {
                 font-size: 1em;
@@ -363,7 +363,7 @@
             .slot-machine {
                 height: 80px;
                 border-width: 3px;
-                margin-bottom: 1.5em;
+                margin-bottom: 1.2em; /* ⭐ 마진 조절 */
             }
 
             .slot-item {
@@ -374,7 +374,7 @@
 
             .result-text {
                 font-size: 1.2em;
-                margin-top: 1.5em;
+                margin-top: 1.2em; /* ⭐ 마진 조절 */
             }
 
             .btn {
@@ -385,15 +385,15 @@
 
             .button-container {
                 gap: 0.5em;
-                margin-top: 1.5em;
+                margin-top: 1.2em; /* ⭐ 마진 조절 */
             }
 
             .modal {
-                padding: 1em;
+                padding: 0.8em; /* ⭐ 모바일 패딩 감소 */
             }
 
             .modal-content {
-                padding: 1.5em;
+                padding: 1.2em; /* ⭐ 모바일 패딩 감소 */
                 width: 90%;
             }
 
@@ -414,34 +414,32 @@
             }
 
             #restaurantListEdit li {
-                align-items: center; /* ⭐ 세로 중앙 정렬 유지 */
+                align-items: center;
                 margin-bottom: 0.8em;
                 padding: 0.8em 1em;
             }
 
             #restaurantListEdit li span {
-                margin-bottom: 0; /* ⭐ 불필요한 마진 제거 */
-                margin-right: 0.5em; /* ⭐ 식당 이름과 버튼 사이 간격 */
-                flex-grow: 1; /* ⭐ 식당 이름이 가능한 공간을 채우도록 */
-                min-width: 0; /* 텍스트가 넘칠 경우 줄바꿈이 아닌 생략되도록 */
+                margin-bottom: 0;
+                margin-right: 0.5em;
+                flex-grow: 1;
+                min-width: 0;
             }
 
             #restaurantListEdit li .button-wrapper {
-                /* ⭐ flex-shrink: 0; 이 이미 적용되어 있어 줄어들지 않음 */
-                /* width: auto; 버튼들이 내용에 맞게 자동 조절되도록 */
+                /* No changes needed here, as flex-shrink is already 0 */
             }
 
             #restaurantListEdit li .edit-btn,
             #restaurantListEdit li .delete-btn {
-                font-size: 0.8em; /* 모바일에서 버튼 글자 크기 조금 더 줄임 */
-                padding: 0.4em 0.7em; /* 모바일에서 버튼 패딩 줄임 */
-                /* min-width: auto; - nowrap 때문에 자동 조절됨 */
+                font-size: 0.8em;
+                padding: 0.4em 0.7em;
             }
 
             #restaurantListEdit li .edit-input {
-                width: calc(100% - 100px); /* 모바일 버튼 너비 고려 */
+                width: calc(100% - 100px);
                 padding: 0.4em;
-                margin-bottom: 0; /* 마진 제거 */
+                margin-bottom: 0;
             }
             .help-modal-content h2 {
                 font-size: 1.5em;
@@ -449,6 +447,11 @@
 
             .help-modal-content p {
                 font-size: 1em;
+            }
+
+            .footer {
+                margin-top: 10px; /* ⭐ 모바일 푸터 상단 여백 조절 */
+                font-size: 0.8em; /* ⭐ 모바일 푸터 글자 크기 조절 */
             }
         }
     </style>
@@ -473,12 +476,12 @@
             <button id="addButton" class="btn">추가하기</button>
             <button id="editButton" class="btn">목록편집</button>
         </div>
+
+        <footer class="footer">
+            <p>&copy; 2025 인사전략팀 인턴 한세진</p>
+        </footer>
     </div>
     
-    <footer class="footer">
-        <p>&copy; 2025 인사전략팀 인턴 한세진</p>
-    </footer>
-
     <div id="addModal" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
@@ -517,11 +520,11 @@
             const spinButton = document.getElementById('spinButton');
             const addButton = document.getElementById('addButton');
             const editButton = document.getElementById('editButton');
-            const helpButton = document.getElementById('helpButton'); // Help button
+            const helpButton = document.getElementById('helpButton');
 
             const addModal = document.getElementById('addModal');
             const editModal = document.getElementById('editModal');
-            const helpModal = document.getElementById('helpModal'); // Help modal
+            const helpModal = document.getElementById('helpModal');
             const closeButtons = document.querySelectorAll('.close-button');
             const restaurantInput = document.getElementById('restaurantInput');
             const addRestaurantToListButton = document.getElementById('addRestaurantToList');
@@ -532,16 +535,16 @@
             let isSpinning = false;
 
             const defaultRestaurants = [
-                '샐모닝', '센몬텐', '제이그램', '초애삼계탕', '하우슬리', '헤리스헤이스', '여가반상', 
-                '스타벅스', '베어스타코', '파리바게뜨', '코코의 식탁', '오국밥', '보영만두', '한소쿰', 
-                '오지오커피', '소풍가는날', '나이스카페인클럽', '저스트샐러드', '올라포케', '찌미오', 
-                '커피사피엔스', '월수금', '꽈리칼국수', '본도시락', '계단라멘', '신의한국수', '훅트포케', 
-                '육채미', '영미당 닭갈비', '엄마손뷔페', '돈태백', '마곡회관', '힐 베이글', '앤덴커피', 
-                '대가원', '명동칼국수', '중식당 청가', '화월', '홍콩반점', '카페디얼', '이자카야 하루', 
-                '마곡동소담김밥', '고릴라쉐프', 'SO GON', '로스터리락온', '민영활어공장', '조선부뚜막', 
-                '울동네뚜부집', '어달스시', '부대옥', '순대실록', '스타벅스', '오모이', '설반', '사위식당', 
-                '진마루', '짬뽕지존', '버거킹', '헤비스테이크', '미숯랭', '샐러디', '초이다이닝', 
-                '란콰이펑누들', '시도니아', '후라토식당', '당산포차 점심뷔페', '콜트클럽', '본죽&비빔밥cafe', 
+                '샐모닝', '센몬텐', '제이그램', '초애삼계탕', '하우슬리', '헤리스헤이스', '여가반상',
+                '스타벅스', '베어스타코', '파리바게뜨', '코코의 식탁', '오국밥', '보영만두', '한소쿰',
+                '오지오커피', '소풍가는날', '나이스카페인클럽', '저스트샐러드', '올라포케', '찌미오',
+                '커피사피엔스', '월수금', '꽈리칼국수', '본도시락', '계단라멘', '신의한국수', '훅트포케',
+                '육채미', '영미당 닭갈비', '엄마손뷔페', '돈태백', '마곡회관', '힐 베이글', '앤덴커피',
+                '대가원', '명동칼국수', '중식당 청가', '화월', '홍콩반점', '카페디얼', '이자카야 하루',
+                '마곡동소담김밥', '고릴라쉐프', 'SO GON', '로스터리락온', '민영활어공장', '조선부뚜막',
+                '울동네뚜부집', '어달스시', '부대옥', '순대실록', '스타벅스', '오모이', '설반', '사위식당',
+                '진마루', '짬뽕지존', '버거킹', '헤비스테이크', '미숯랭', '샐러디', '초이다이닝',
+                '란콰이펑누들', '시도니아', '후라토식당', '당산포차 점심뷔페', '콜트클럽', '본죽&비빔밥cafe',
                 '컴포즈커피', '샐러디', '종로계림닭도리탕원조', '박가부대', '전주현대옥'
             ];
 
@@ -583,8 +586,6 @@
                     });
                 }
 
-                // 첫 번째 아이템의 높이를 측정하여 itemHeight 설정 (렌더링 후 정확한 값)
-                // 이 시점에는 이미 슬롯 아이템들이 DOM에 추가되어 있으므로 정확한 높이를 얻을 수 있습니다.
                 itemHeight = slotContentWrapper.querySelector('.slot-item').offsetHeight;
                 gsap.set(slotContentWrapper, { y: 0 });
             }
@@ -620,7 +621,6 @@
                     overwrite: "auto",
                     onComplete: () => {
                         const currentY = gsap.getProperty(slotContentWrapper, "y");
-                        // 멈춘 위치에서 가장 가까운 아이템의 인덱스를 계산 (양수 값으로 변환 후)
                         const stoppedItemIndex = Math.round(Math.abs(currentY) / itemHeight);
                         const actualSelectedRestaurantIndex = stoppedItemIndex % totalOriginalItems;
                         const actualSelectedRestaurant = restaurants[actualSelectedRestaurantIndex];
@@ -629,9 +629,6 @@
                         spinButton.disabled = false;
                         isSpinning = false;
 
-                        // 애니메이션 완료 후, 슬롯 띠를 당첨된 식당이 정확히 중앙에 오도록 위치 조정
-                        // (애니메이션 완료 후 미세한 오차가 있을 수 있으므로 재조정)
-                        // 이렇게 하면 다음 스핀을 시작할 때 초기 위치가 깔끔하게 유지됩니다.
                         gsap.set(slotContentWrapper, { y: -(revolutions * totalOriginalItems + selectedOriginalIndex) * itemHeight });
                     }
                 });
@@ -676,7 +673,6 @@
                 editModal.style.display = 'flex';
             });
 
-            // Help Button Event Listener
             helpButton.addEventListener('click', () => {
                 helpModal.style.display = 'flex';
             });
@@ -693,7 +689,6 @@
                     span.textContent = restaurant;
                     listItem.appendChild(span);
 
-                    // ⭐ 버튼들을 감싸는 새로운 래퍼 추가
                     const buttonWrapper = document.createElement('div');
                     buttonWrapper.classList.add('button-wrapper');
 
@@ -738,13 +733,11 @@
                                     renderSlotItems();
                                 } else {
                                     alert('이미 존재하는 이름입니다. 다른 이름을 입력해주세요.');
-                                    // 다시 원래 span으로 되돌림
                                     const tempSpan = document.createElement('span');
                                     tempSpan.textContent = originalName;
                                     listItem.replaceChild(tempSpan, inputField);
                                 }
                             } else {
-                                // 변경사항이 없거나 입력이 비어있으면 원래대로 되돌림
                                 const tempSpan = document.createElement('span');
                                 tempSpan.textContent = originalName;
                                 listItem.replaceChild(tempSpan, inputField);
@@ -781,7 +774,7 @@
                 button.addEventListener('click', () => {
                     addModal.style.display = 'none';
                     editModal.style.display = 'none';
-                    helpModal.style.display = 'none'; // Close help modal
+                    helpModal.style.display = 'none';
                 });
             });
 
@@ -792,13 +785,12 @@
                 if (event.target === editModal) {
                     editModal.style.display = 'none';
                 }
-                if (event.target === helpModal) { // Close help modal on outside click
+                if (event.target === helpModal) {
                     helpModal.style.display = 'none';
                 }
             });
 
             loadRestaurants();
-            // 폰트 로드 완료 후 정확한 itemHeight를 다시 측정 (선택 사항이지만 정확도를 높임)
             window.addEventListener('load', () => {
                 if (slotContentWrapper.querySelector('.slot-item')) {
                     itemHeight = slotContentWrapper.querySelector('.slot-item').offsetHeight;
