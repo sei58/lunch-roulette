@@ -12,8 +12,8 @@
             font-family: 'Gowun Dodum', sans-serif;
             display: flex;
             flex-direction: column;
-            justify-content: center; /* ⭐ 콘텐츠가 세로 중앙에 오도록 변경 */
-            align-items: center;
+            justify-content: space-between;
+            align-items: center; /* 가운데 정렬 유지 */
             min-height: 100vh;
             background: linear-gradient(to bottom, #a8d8ff, #ffffff);
             color: #333;
@@ -23,7 +23,7 @@
         .container {
             text-align: center;
             background-color: rgba(255, 255, 255, 0.9);
-            padding: 30px 50px;
+            padding: 25px 40px; /* PC 패딩 조정 */
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             position: relative;
@@ -31,10 +31,10 @@
             width: 90%;
             max-width: 500px;
             box-sizing: border-box;
-            /* flex-grow: 1; ⭐ 이 속성을 제거하여 높이가 콘텐츠에 맞춰지도록 함 */
+            flex-grow: 0; /* 컨테이너가 내용물에 맞춰 높이를 차지하도록 변경 */
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start; /* 내부 요소들을 상단 정렬 */
             margin-top: 20px;
             margin-bottom: 20px;
         }
@@ -43,7 +43,7 @@
             font-size: 2.5em;
             font-weight: bold;
             color: #333;
-            margin-bottom: 20px; /* ⭐ 마진 감소 */
+            margin-bottom: 20px; /* PC 마진 조정 */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -62,7 +62,7 @@
             border: 5px solid rgb(190, 214, 0);
             border-radius: 15px;
             background-color: #fff;
-            margin: 0 auto 20px; /* ⭐ 마진 감소 */
+            margin: 0 auto 20px; /* PC 마진 조정 */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -97,7 +97,7 @@
             font-size: 1.5em;
             font-weight: bold;
             color: #666;
-            margin-top: 20px; /* ⭐ 마진 감소 */
+            margin-top: 20px; /* PC 마진 조정 */
             min-height: 30px;
         }
 
@@ -108,10 +108,10 @@
         }
 
         .button-container {
-            margin-top: 20px; /* ⭐ 마진 감소 */
+            margin-top: 20px; /* PC 마진 조정 */
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px; /* PC 간격 조정 */
             flex-wrap: nowrap;
         }
 
@@ -119,9 +119,9 @@
             background-color: rgb(190, 214, 0);
             color: #fff;
             border: none;
-            padding: 15px 25px;
+            padding: 12px 20px; /* PC 패딩 조정 */
             border-radius: 10px;
-            font-size: 1.2em;
+            font-size: 1.1em; /* 폰트 사이즈 살짝 줄임 */
             font-weight: bold;
             cursor: pointer;
             transition: background-color 0.3s ease;
@@ -184,7 +184,7 @@
         .modal-content {
             background-color: #fefefe;
             margin: auto;
-            padding: 30px;
+            padding: 25px; /* PC 패딩 조정 */
             border: 1px solid #888;
             border-radius: 15px;
             width: 80%;
@@ -215,7 +215,7 @@
         #restaurantInput {
             width: calc(100% - 20px);
             padding: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 15px; /* 마진 조정 */
             border: 2px solid rgb(190, 214, 0);
             border-radius: 8px;
             font-size: 1em;
@@ -225,7 +225,7 @@
         }
 
         #addRestaurantToList {
-            margin-top: 10px;
+            margin-top: 5px; /* 마진 조정 */
         }
 
         #restaurantListEdit {
@@ -238,8 +238,8 @@
 
         #restaurantListEdit li {
             background-color: #f0f0f0;
-            margin-bottom: 10px;
-            padding: 10px 15px;
+            margin-bottom: 8px; /* 마진 조정 */
+            padding: 8px 12px; /* 패딩 조정 */
             border-radius: 8px;
             display: flex;
             justify-content: space-between;
@@ -255,66 +255,22 @@
             overflow-wrap: break-word;
         }
 
-        #restaurantListEdit li .button-wrapper {
-            display: flex;
-            gap: 5px;
-            flex-shrink: 0;
-        }
-
-        #restaurantListEdit li .edit-btn,
-        #restaurantListEdit li .delete-btn {
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9em;
-            white-space: nowrap;
-            min-width: 45px;
-        }
-
-        #restaurantListEdit li .edit-btn {
-            background-color: #009FDA;
-        }
-
-        #restaurantListEdit li .edit-btn:hover {
-            background-color: #007bb3;
-        }
-
-        #restaurantListEdit li .delete-btn {
-            background-color: #641F45;
-        }
-
-        #restaurantListEdit li .delete-btn:hover {
-            background-color: #4a1733;
-        }
-
-        #restaurantListEdit li .edit-input {
-            width: calc(100% - 120px);
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 1em;
-            box-sizing: border-box;
-        }
-
-        /* Help Modal Specific Styles */
         .help-modal-content {
-            padding: 25px;
+            padding: 20px; /* 패딩 조정 */
             text-align: left;
         }
 
         .help-modal-content h2 {
             font-size: 1.8em;
             color: #333;
-            margin-bottom: 20px;
+            margin-bottom: 15px; /* 마진 조정 */
             text-align: center;
         }
 
         .help-modal-content p {
             font-size: 1.1em;
             line-height: 1.6;
-            margin-bottom: 15px;
+            margin-bottom: 10px; /* 마진 조정 */
             color: #555;
         }
 
@@ -326,132 +282,118 @@
         /* Footer Styles */
         .footer {
             width: 100%;
-            padding: 10px 0; /* ⭐ 패딩 감소 */
+            padding: 15px 0;
             text-align: center;
             color: #777;
             font-size: 0.9em;
             flex-shrink: 0;
-            margin-top: 15px; /* ⭐ 컨테이너와의 간격 조절 */
+            margin-top: auto; /* 푸터를 하단으로 밀어냄 */
         }
 
         /* --- 미디어 쿼리: 작은 화면 (모바일)에 대한 최적화 --- */
         @media (max-width: 600px) {
             .container {
-                padding: 1.2em 0.8em; /* ⭐ 모바일 패딩 감소 */
+                padding: 1.2em 0.8em; /* 모바일 패딩 더 줄임 */
                 width: 95%;
-                margin-top: 15px; /* ⭐ 모바일 상단 여백 조절 */
-                margin-bottom: 15px; /* ⭐ 모바일 하단 여백 조절 */
+                margin-top: 10px;
+                margin-bottom: 10px;
             }
 
             .title {
-                font-size: 1.8em;
-                margin-bottom: 1em; /* ⭐ 마진 조절 */
+                font-size: 1.7em; /* 모바일 폰트 크기 조정 */
+                margin-bottom: 0.8em; /* 모바일 마진 조정 */
             }
             .title .emoji {
-                font-size: 1em;
-                margin: 0 0.3em;
+                font-size: 0.9em; /* 모바일 이모지 크기 조정 */
+                margin: 0 0.2em;
             }
 
             .help-button {
-                top: 10px;
-                left: 10px;
-                width: 30px;
-                height: 30px;
-                font-size: 1em;
+                top: 8px; /* 모바일 위치 조정 */
+                left: 8px; /* 모바일 위치 조정 */
+                width: 28px; /* 모바일 크기 조정 */
+                height: 28px; /* 모바일 크기 조정 */
+                font-size: 0.9em; /* 모바일 폰트 크기 조정 */
             }
 
             .slot-machine {
-                height: 80px;
+                height: 70px; /* 모바일 높이 조정 */
                 border-width: 3px;
-                margin-bottom: 1.2em; /* ⭐ 마진 조절 */
+                margin-bottom: 1em; /* 모바일 마진 조정 */
             }
 
             .slot-item {
-                font-size: 1.2em;
-                height: 80px;
-                line-height: 80px;
+                font-size: 1.1em; /* 모바일 폰트 크기 조정 */
+                height: 70px; /* 모바일 높이 조정 */
+                line-height: 70px; /* 모바일 높이 조정 */
             }
 
             .result-text {
-                font-size: 1.2em;
-                margin-top: 1.2em; /* ⭐ 마진 조절 */
+                font-size: 1.1em; /* 모바일 폰트 크기 조정 */
+                margin-top: 1em; /* 모바일 마진 조정 */
             }
 
             .btn {
-                padding: 0.7em 1em;
-                font-size: 0.9em;
+                padding: 0.6em 0.8em; /* 모바일 패딩 조정 */
+                font-size: 0.85em; /* 모바일 폰트 크기 조정 */
                 flex-grow: 1;
             }
 
             .button-container {
-                gap: 0.5em;
-                margin-top: 1.2em; /* ⭐ 마진 조절 */
+                gap: 0.4em; /* 모바일 간격 조정 */
+                margin-top: 1em; /* 모바일 마진 조정 */
             }
 
             .modal {
-                padding: 0.8em; /* ⭐ 모바일 패딩 감소 */
+                padding: 0.8em; /* 모바일 패딩 조정 */
             }
 
             .modal-content {
-                padding: 1.2em; /* ⭐ 모바일 패딩 감소 */
+                padding: 1.2em; /* 모바일 패딩 조정 */
                 width: 90%;
             }
 
             .close-button {
-                font-size: 1.8em;
-                top: 0.5em;
-                right: 0.8em;
+                font-size: 1.5em; /* 모바일 폰트 크기 조정 */
+                top: 0.4em; /* 모바일 위치 조정 */
+                right: 0.6em; /* 모바일 위치 조정 */
             }
 
             #restaurantInput {
-                padding: 0.6em;
-                margin-bottom: 1em;
-                height: 5em;
+                padding: 0.5em; /* 모바일 패딩 조정 */
+                margin-bottom: 0.8em; /* 모바일 마진 조정 */
+                height: 4.5em; /* 모바일 높이 조정 */
             }
 
             #restaurantListEdit {
-                max-height: 40vh;
+                max-height: 35vh; /* 모바일 높이 조정 */
             }
 
             #restaurantListEdit li {
-                align-items: center;
-                margin-bottom: 0.8em;
-                padding: 0.8em 1em;
+                margin-bottom: 0.6em; /* 모바일 마진 조정 */
+                padding: 0.6em 0.8em; /* 모바일 패딩 조정 */
             }
 
             #restaurantListEdit li span {
-                margin-bottom: 0;
-                margin-right: 0.5em;
-                flex-grow: 1;
-                min-width: 0;
-            }
-
-            #restaurantListEdit li .button-wrapper {
-                /* No changes needed here, as flex-shrink is already 0 */
+                margin-right: 0.4em; /* 모바일 간격 조정 */
             }
 
             #restaurantListEdit li .edit-btn,
             #restaurantListEdit li .delete-btn {
-                font-size: 0.8em;
-                padding: 0.4em 0.7em;
+                font-size: 0.75em; /* 모바일 폰트 크기 조정 */
+                padding: 0.3em 0.6em; /* 모바일 패딩 조정 */
             }
 
             #restaurantListEdit li .edit-input {
-                width: calc(100% - 100px);
-                padding: 0.4em;
-                margin-bottom: 0;
+                width: calc(100% - 90px); /* 모바일 버튼 너비 고려 */
+                padding: 0.3em; /* 모바일 패딩 조정 */
             }
             .help-modal-content h2 {
-                font-size: 1.5em;
+                font-size: 1.4em; /* 모바일 폰트 크기 조정 */
             }
 
             .help-modal-content p {
-                font-size: 1em;
-            }
-
-            .footer {
-                margin-top: 10px; /* ⭐ 모바일 푸터 상단 여백 조절 */
-                font-size: 0.8em; /* ⭐ 모바일 푸터 글자 크기 조절 */
+                font-size: 0.95em; /* 모바일 폰트 크기 조정 */
             }
         }
     </style>
@@ -476,12 +418,12 @@
             <button id="addButton" class="btn">추가하기</button>
             <button id="editButton" class="btn">목록편집</button>
         </div>
-
-        <footer class="footer">
-            <p>&copy; 2025 인사전략팀 인턴 한세진</p>
-        </footer>
     </div>
     
+    <footer class="footer">
+        <p>&copy; 2025 인사전략팀 인턴 한세진</p>
+    </footer>
+
     <div id="addModal" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
@@ -535,16 +477,16 @@
             let isSpinning = false;
 
             const defaultRestaurants = [
-                '샐모닝', '센몬텐', '제이그램', '초애삼계탕', '하우슬리', '헤리스헤이스', '여가반상',
-                '스타벅스', '베어스타코', '파리바게뜨', '코코의 식탁', '오국밥', '보영만두', '한소쿰',
-                '오지오커피', '소풍가는날', '나이스카페인클럽', '저스트샐러드', '올라포케', '찌미오',
-                '커피사피엔스', '월수금', '꽈리칼국수', '본도시락', '계단라멘', '신의한국수', '훅트포케',
-                '육채미', '영미당 닭갈비', '엄마손뷔페', '돈태백', '마곡회관', '힐 베이글', '앤덴커피',
-                '대가원', '명동칼국수', '중식당 청가', '화월', '홍콩반점', '카페디얼', '이자카야 하루',
-                '마곡동소담김밥', '고릴라쉐프', 'SO GON', '로스터리락온', '민영활어공장', '조선부뚜막',
-                '울동네뚜부집', '어달스시', '부대옥', '순대실록', '스타벅스', '오모이', '설반', '사위식당',
-                '진마루', '짬뽕지존', '버거킹', '헤비스테이크', '미숯랭', '샐러디', '초이다이닝',
-                '란콰이펑누들', '시도니아', '후라토식당', '당산포차 점심뷔페', '콜트클럽', '본죽&비빔밥cafe',
+                '샐모닝', '센몬텐', '제이그램', '초애삼계탕', '하우슬리', '헤리스헤이스', '여가반상', 
+                '스타벅스', '베어스타코', '파리바게뜨', '코코의 식탁', '오국밥', '보영만두', '한소쿰', 
+                '오지오커피', '소풍가는날', '나이스카페인클럽', '저스트샐러드', '올라포케', '찌미오', 
+                '커피사피엔스', '월수금', '꽈리칼국수', '본도시락', '계단라멘', '신의한국수', '훅트포케', 
+                '육채미', '영미당 닭갈비', '엄마손뷔페', '돈태백', '마곡회관', '힐 베이글', '앤덴커피', 
+                '대가원', '명동칼국수', '중식당 청가', '화월', '홍콩반점', '카페디얼', '이자카야 하루', 
+                '마곡동소담김밥', '고릴라쉐프', 'SO GON', '로스터리락온', '민영활어공장', '조선부뚜막', 
+                '울동네뚜부집', '어달스시', '부대옥', '순대실록', '스타벅스', '오모이', '설반', '사위식당', 
+                '진마루', '짬뽕지존', '버거킹', '헤비스테이크', '미숯랭', '샐러디', '초이다이닝', 
+                '란콰이펑누들', '시도니아', '후라토식당', '당산포차 점심뷔페', '콜트클럽', '본죽&비빔밥cafe', 
                 '컴포즈커피', '샐러디', '종로계림닭도리탕원조', '박가부대', '전주현대옥'
             ];
 
