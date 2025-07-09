@@ -12,7 +12,7 @@
             font-family: 'Gowun Dodum', sans-serif;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: center; /* 중앙 정렬로 변경 */
             align-items: center; /* 가운데 정렬 유지 */
             min-height: 100vh;
             background: linear-gradient(to bottom, #a8d8ff, #ffffff);
@@ -31,12 +31,12 @@
             width: 90%;
             max-width: 500px;
             box-sizing: border-box;
-            flex-grow: 0; /* 컨테이너가 내용물에 맞춰 높이를 차지하도록 변경 */
+            flex-grow: 0;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; /* 내부 요소들을 상단 정렬 */
-            margin-top: 20px;
-            margin-bottom: 20px;
+            justify-content: flex-start;
+            margin-top: 0; /* 중앙 정렬을 위해 마진 제거 */
+            margin-bottom: 0; /* 중앙 정렬을 위해 마진 제거 */
         }
 
         .title {
@@ -287,7 +287,7 @@
             color: #777;
             font-size: 0.9em;
             flex-shrink: 0;
-            margin-top: auto; /* 푸터를 하단으로 밀어냄 */
+            margin-top: 20px; /* 룰렛 컨테이너 바로 아래에 오도록 마진 추가 */
         }
 
         /* --- 미디어 쿼리: 작은 화면 (모바일)에 대한 최적화 --- */
@@ -295,8 +295,8 @@
             .container {
                 padding: 1.2em 0.8em; /* 모바일 패딩 더 줄임 */
                 width: 95%;
-                margin-top: 10px;
-                margin-bottom: 10px;
+                margin-top: 0; /* 중앙 정렬을 위해 마진 제거 */
+                margin-bottom: 0; /* 중앙 정렬을 위해 마진 제거 */
             }
 
             .title {
@@ -395,6 +395,10 @@
             .help-modal-content p {
                 font-size: 0.95em; /* 모바일 폰트 크기 조정 */
             }
+
+            .footer {
+                margin-top: 15px; /* 모바일에서도 룰렛 컨테이너 바로 아래에 오도록 마진 조정 */
+            }
         }
     </style>
 </head>
@@ -449,7 +453,8 @@
             <p><span class="emoji">➕</span> 새로운 식당을 추가하고 싶다면 '추가하기' 버튼을 눌러 목록에 추가할 수 있어요!</p>
             <p><span class="emoji">✏️</span> 기존 식당 목록을 수정하거나 삭제하고 싶다면 '목록 편집' 버튼을 활용하세요!</p>
             <p><span class="emoji">✨</span> 모든 식당의 당첨 확률은 동일합니다!</p>
-            <p><span class="emoji">🔄</span> 앱 업데이트 내용이 반영되지 않는다면, 쿠키/사이트 데이터를 삭제해보세요!</p>
+            <p><span class="emoji">🔄</span> 앱 업데이트 내용을 반영하고 싶다면 쿠키/사이트 데이터를 삭제해보세요!</p>
+            <p><span class="emoji">❗</span> 단, 쿠키/사이트 데이터를 삭제하면 저장된 사용자 설정이 초기화될 수 있습니다!</p>
         </div>
     </div>
 
