@@ -255,6 +255,54 @@
             overflow-wrap: break-word;
         }
 
+        /* 수정 및 삭제 버튼 스타일 */
+        #restaurantListEdit li .button-wrapper {
+            display: flex;
+            gap: 5px; /* 버튼 간 간격 */
+        }
+
+        #restaurantListEdit li .edit-btn {
+            background-color: rgb(0, 159, 218); /* 수정 버튼 색상 */
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            white-space: nowrap; /* 줄바꿈 방지 */
+        }
+
+        #restaurantListEdit li .edit-btn:hover {
+            background-color: rgb(0, 130, 180);
+        }
+
+        #restaurantListEdit li .delete-btn {
+            background-color: rgb(100, 31, 69); /* 삭제 버튼 색상 */
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            white-space: nowrap; /* 줄바꿈 방지 */
+        }
+
+        #restaurantListEdit li .delete-btn:hover {
+            background-color: rgb(80, 25, 55);
+        }
+
+        #restaurantListEdit li .edit-input {
+            flex-grow: 1;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1.1em;
+            box-sizing: border-box;
+        }
+
+
         .help-modal-content {
             padding: 20px; /* 패딩 조정 */
             text-align: left;
@@ -448,13 +496,12 @@
     <div id="helpModal" class="modal">
         <div class="modal-content help-modal-content">
             <span class="close-button">&times;</span>
-            <h2>🍽️오늘의 점심 룰렛🍽️</h2>
-            <p><span class="emoji">🤔</span>뭘 먹을지 고민될 때, '돌리기' 버튼을 눌러 점심 식당을 정해보세요!</p>
-            <p><span class="emoji">➕</span>새로운 식당을 추가하고 싶다면, '추가하기' 버튼을 눌러 목록에 추가할 수 있어요!</p>
-            <p><span class="emoji">✏️</span>기존 식당 목록을 수정하거나 삭제하고 싶다면, '목록 편집' 버튼을 활용하세요!</p>
-            <p><span class="emoji">✨</span>기존 식당 목록은 마곡 내 페이코 식권 사용 가능 식당이며, 모든 식당의 당첨 확률은 동일합니다!</p>
-            <p><span class="emoji">🔄</span>앱 업데이트 내용을 반영하고 싶다면, 페이지를 새로고침하거나 쿠키/사이트 데이터를 삭제해보세요!</p>
-            <p><span class="emoji">❗</span>단, 쿠키/사이트 데이터를 삭제하면 저장된 사용자 설정이 초기화될 수 있습니다!</p>
+            <h2>오늘의 점심 룰렛 🍽️</h2>
+            <p><span class="emoji">🤔</span> 뭘 먹을지 고민될 때, '돌리기' 버튼을 눌러 점심 식당을 정해보세요!</p>
+            <p><span class="emoji">➕</span> 새로운 식당을 추가하고 싶다면 '추가하기' 버튼을 눌러 목록에 추가할 수 있어요!</p>
+            <p><span class="emoji">✏️</span> 기존 식당 목록을 수정하거나 삭제하고 싶다면 '목록 편집' 버튼을 활용하세요!</p>
+            <p><span class="emoji">✨</span> 모든 식당의 당첨 확률은 동일합니다!</p>
+            <p><span class="emoji">🔄</span> 앱 업데이트 내용이 반영되지 않는다면, 쿠키/사이트 데이터를 삭제해보세요!</p>
         </div>
     </div>
 
