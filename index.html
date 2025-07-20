@@ -59,7 +59,7 @@
 
         /* 카테고리 선택과 룰렛 디스플레이를 통합하는 새로운 섹션 */
         .combined-slot-display {
-            width: 100%;
+            width: 420px; /* PC: 120px (category) + 300px (roulette) */
             height: 100px; /* 룰렛 아이템 높이와 동일하게 설정 */
             border: 5px solid rgb(190, 214, 0);
             border-radius: 15px;
@@ -120,7 +120,8 @@
 
         /* 룰렛 아이템이 실제로 움직이는 디스플레이 영역 */
         .roulette-display-area {
-            flex-grow: 1; /* 남은 공간을 모두 차지 */
+            flex-shrink: 0; /* 남은 공간을 차지하지 않고 고정 너비 유지 */
+            width: 300px; /* PC: 룰렛 아이템 높이 100px * 3 (3:1 비율) */
             height: 100%;
             position: relative; /* slot-content-wrapper의 기준점 */
             overflow: hidden; /* 룰렛 스크롤을 위해 필요 */
@@ -416,6 +417,7 @@
             }
 
             .combined-slot-display {
+                width: 230px; /* Mobile: 80px (category) + 150px (roulette) */
                 height: 50px; /* 모바일 높이 조정 */
                 border-width: 3px;
                 margin-bottom: 1em; /* 모바일 마진 조정 */
@@ -433,7 +435,7 @@
             }
 
             .roulette-display-area {
-                /* 모바일에서는 특별히 변경할 필요 없음 */
+                width: 150px; /* Mobile: 룰렛 아이템 높이 50px * 3 (3:1 비율) */
             }
 
             .slot-item {
@@ -651,7 +653,7 @@
                     { name: "당산포차 점심뷔페", address: "서울 강서구 마곡동 당산포차 점심뷔페", mapLink: "https://naver.me/GRo4Numf" },
                     { name: "본죽&비빔밥cafe", address: "서울 강서구 마곡동 본죽&비빔밥cafe", mapLink: "https://naver.me/FvEj2Pvq" },
                     { name: "종로계림닭도리탕원조", address: "서울 강서구 마곡동 종로계림닭도리탕원조", mapLink: "" },
-                 /* { name: "박가부대", address: "서울 강서구 마곡동 박가부대", mapLink: "https://naver.me/xRhE8QMx" }, */
+                    { name: "박가부대", address: "서울 강서구 마곡동 박가부대", mapLink: "https://naver.me/xRhE8QMx" },
                     { name: "전주현대옥", address: "서울 강서구 마곡동 전주현대옥", mapLink: "https://naver.me/5bVsIqBm" },
                     { name: "SO GON", address: "서울 강서구 마곡동 SO GON", mapLink: "https://naver.me/Fk7g0wIk" },
                     { name: "미숯랭", address: "서울 강서구 마곡동 미숯랭", mapLink: "https://naver.me/xa5RTiRU" },             
@@ -672,7 +674,7 @@
                     { name: "화월", address: "서울 강서구 마곡동 화월", mapLink: "https://naver.me/GmbWZAP9" },
                     { name: "이자카야 하루", address: "서울 강서구 마곡동 이자카야 하루", mapLink: "https://naver.me/xExFMpOY" },
                     { name: "민영활어공장", address: "서울 강서구 마곡동 민영활어공장", mapLink: "https://naver.me/5Q37Ao9T" },
-                /*  { name: "어달스시", address: "서울 강서구 마곡동 어달스시", mapLink: "" },*/
+                /* { name: "어달스시", address: "서울 강서구 마곡동 어달스시", mapLink: "" },*/
                     { name: "오모이", address: "서울 강서구 마곡동 오모이", mapLink: "https://naver.me/54LbRGcD" },
                     { name: "초이다이닝", address: "서울 강서구 마곡동 초이다이닝", mapLink: "https://naver.me/GvcTOjkI" },
                     { name: "후라토식당", address: "서울 강서구 마곡동 후라토식당", mapLink: "https://naver.me/xOxHBCzt" }
