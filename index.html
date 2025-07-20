@@ -59,8 +59,9 @@
 
         /* 카테고리 선택과 룰렛 디스플레이를 통합하는 새로운 섹션 */
         .combined-slot-display {
-            width: 420px; /* PC: 120px (category) + 300px (roulette) */
-            height: 100px; /* 룰렛 아이템 높이와 동일하게 설정 */
+            width: 100%; /* 부모 컨테이너 너비에 맞춤 */
+            max-width: 420px; /* PC 최대 너비 유지 (카테고리 120px + 룰렛 300px) */
+            height: 100px; /* PC 높이 유지 */
             border: 5px solid rgb(190, 214, 0);
             border-radius: 15px;
             background-color: #fff;
@@ -74,8 +75,8 @@
 
         /* 카테고리 선택 드롭다운 영역 */
         .category-selector-area {
+            flex-basis: calc(120 / 420 * 100%); /* 120px / 420px 비율 유지 */
             flex-shrink: 0; /* 공간이 부족해도 줄어들지 않도록 설정 */
-            width: 120px; /* 카테고리 드롭다운 고정 너비 */
             height: 100%; /* 부모 높이에 맞춤 */
             display: flex;
             align-items: center;
@@ -120,8 +121,8 @@
 
         /* 룰렛 아이템이 실제로 움직이는 디스플레이 영역 */
         .roulette-display-area {
+            flex-basis: calc(300 / 420 * 100%); /* 300px / 420px 비율 유지 */
             flex-shrink: 0; /* 남은 공간을 차지하지 않고 고정 너비 유지 */
-            width: 300px; /* PC: 룰렛 아이템 높이 100px * 3 (3:1 비율) */
             height: 100%;
             position: relative; /* slot-content-wrapper의 기준점 */
             overflow: hidden; /* 룰렛 스크롤을 위해 필요 */
@@ -417,14 +418,15 @@
             }
 
             .combined-slot-display {
-                width: 230px; /* Mobile: 80px (category) + 150px (roulette) */
+                width: 100%; /* 모바일에서도 부모 컨테이너 너비에 맞춤 */
+                max-width: 230px; /* 모바일 최대 너비 유지 (카테고리 80px + 룰렛 150px) */
                 height: 50px; /* 모바일 높이 조정 */
                 border-width: 3px;
-                margin-bottom: 1em; /* 모바일 마진 조정 */
+                margin-bottom: 1em;
             }
 
             .category-selector-area {
-                width: 80px; /* 모바일 카테고리 너비 조정 */
+                flex-basis: calc(80 / 230 * 100%); /* 80px / 230px 비율 유지 */
             }
 
             #categorySelect {
@@ -435,7 +437,7 @@
             }
 
             .roulette-display-area {
-                width: 150px; /* Mobile: 룰렛 아이템 높이 50px * 3 (3:1 비율) */
+                flex-basis: calc(150 / 230 * 100%); /* 150px / 230px 비율 유지 */
             }
 
             .slot-item {
