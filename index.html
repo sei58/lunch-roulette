@@ -29,14 +29,15 @@
             position: relative;
             z-index: 1;
             width: 90%;
-            max-width: 500px;
+            max-width: 500px; /* 컨테이너 너비 유지 */
             box-sizing: border-box;
             flex-grow: 0;
             display: flex;
-            flex-direction: column;
+            flex-direction: column; /* 세로 정렬로 변경 */
             justify-content: flex-start;
-            margin-top: 0; /* 중앙 정렬을 위해 마진 제거 */
-            margin-bottom: 0; /* 중앙 정렬을 위해 마진 제거 */
+            align-items: center; /* 내부 요소들을 중앙 정렬 */
+            margin-top: 0;
+            margin-bottom: 0;
         }
 
         .title {
@@ -56,18 +57,73 @@
             margin: 0 10px;
         }
 
-        .slot-machine {
+        /* 카테고리 선택과 룰렛 디스플레이를 통합하는 새로운 섹션 */
+        .combined-slot-display {
             width: 100%;
-            height: 100px;
+            height: 100px; /* 룰렛 아이템 높이와 동일하게 설정 */
             border: 5px solid rgb(190, 214, 0);
             border-radius: 15px;
             background-color: #fff;
-            margin: 0 auto 20px; /* PC 마진 조정 */
+            margin: 0 auto 20px;
+            display: flex; /* 내부 요소들을 가로로 정렬 */
+            align-items: center; /* 내부 요소들을 세로 중앙 정렬 */
+            overflow: hidden; /* 룰렛 스크롤을 위해 필요 */
+            position: relative; /* 내부 absolute 요소의 기준점 */
+            box-sizing: border-box; /* 패딩, 보더 포함 너비 계산 */
+        }
+
+        /* 카테고리 선택 드롭다운 영역 */
+        .category-selector-area {
+            flex-shrink: 0; /* 공간이 부족해도 줄어들지 않도록 설정 */
+            width: 120px; /* 카테고리 드롭다운 고정 너비 */
+            height: 100%; /* 부모 높이에 맞춤 */
             display: flex;
-            justify-content: center;
             align-items: center;
-            overflow: hidden;
-            position: relative;
+            justify-content: center;
+            border-right: 2px solid #eee; /* 구분선 */
+            background-color: rgb(190, 214, 0); /* 배경을 돌리기 버튼 색상으로 변경 */
+            box-sizing: border-box;
+        }
+
+        #categorySelect {
+            padding: 8px 5px; /* 내부 패딩 조정 */
+            padding-left: 10px; /* 왼쪽 여백을 10px로 줄여 텍스트를 왼쪽으로 이동 */
+            border: none; /* 부모 영역에 보더가 있으므로 제거 */
+            border-radius: 8px;
+            font-size: 1.3em; /* 텍스트 크기 1.3배로 변경 */
+            font-weight: bold;
+            font-family: 'Gowun Dodum', sans-serif;
+            background-color: transparent; /* 배경 투명하게 */
+            color: #fff; /* 텍스트 색상 흰색으로 변경 */
+            appearance: none; /* 기본 드롭다운 화살표 제거 */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20fill%3D%22%23fff%22%20d%3D%22M208.5%2096.5L128%20177L47.5%2096.5z%22%2F%3E%3C%2Fsvg%3E'); /* 커스텀 화살표 (흰색으로 변경) */
+            background-repeat: no-repeat;
+            background-position: right 5px center; /* 화살표 위치 조정 */
+            background-size: 0.8em; /* 화살표 크기 조정 */
+            cursor: pointer;
+            width: calc(100% - 20px); /* 패딩 고려 (10px + 5px + 화살표 공간) */
+            box-sizing: border-box;
+        }
+
+        #categorySelect:focus {
+            outline: none;
+            /* border-color: rgb(160, 180, 0); */ /* 부모 보더 사용 */
+        }
+
+        /* 드롭다운 옵션들의 배경 및 텍스트 색상 변경 */
+        #categorySelect option, #addCategorySelect option, #editCategorySelect option {
+            background-color: rgb(190, 214, 0); /* 배경색 변경 */
+            color: #fff; /* 텍스트 색상 흰색 */
+        }
+
+        /* 룰렛 아이템이 실제로 움직이는 디스플레이 영역 */
+        .roulette-display-area {
+            flex-grow: 1; /* 남은 공간을 모두 차지 */
+            height: 100%;
+            position: relative; /* slot-content-wrapper의 기준점 */
+            overflow: hidden; /* 룰렛 스크롤을 위해 필요 */
         }
 
         .slot-content-wrapper {
@@ -84,8 +140,8 @@
             font-size: 1.4em;
             font-weight: bold;
             color: #555;
-            height: 100px;
-            line-height: 100px;
+            height: 100px; /* combined-slot-display의 높이와 동일 */
+            line-height: 100px; /* 텍스트 세로 중앙 정렬 */
             width: 100%;
             text-align: center;
             white-space: nowrap;
@@ -338,13 +394,52 @@
             margin-top: 20px; /* 룰렛 컨테이너 바로 아래에 오도록 마진 추가 */
         }
 
+        /* Map Button Styles */
+        #mapButton {
+            background-color: #009fda; /* 네이버 지도 색상 */
+            margin-left: 0; /* 기존 spinButton과의 간격 유지 */
+        }
+
+        #mapButton:hover {
+            background-color: #0289bb;
+        }
+
+
         /* --- 미디어 쿼리: 작은 화면 (모바일)에 대한 최적화 --- */
         @media (max-width: 600px) {
             .container {
                 padding: 1.2em 0.8em; /* 모바일 패딩 더 줄임 */
                 width: 95%;
-                margin-top: 0; /* 중앙 정렬을 위해 마진 제거 */
-                margin-bottom: 0; /* 중앙 정렬을 위해 마진 제거 */
+                margin-top: 0;
+                margin-bottom: 0;
+                gap: 15px; /* 모바일 간격 조정 */
+            }
+
+            .combined-slot-display {
+                height: 50px; /* 모바일 높이 조정 */
+                border-width: 3px;
+                margin-bottom: 1em; /* 모바일 마진 조정 */
+            }
+
+            .category-selector-area {
+                width: 80px; /* 모바일 카테고리 너비 조정 */
+            }
+
+            #categorySelect {
+                font-size: 0.9em; /* 모바일 폰트 크기 조정 */
+                padding: 6px 3px; /* 모바일 패딩 조정 */
+                background-position: right 3px center; /* 화살표 위치 조정 */
+                background-size: 0.7em; /* 화살표 크기 조정 */
+            }
+
+            .roulette-display-area {
+                /* 모바일에서는 특별히 변경할 필요 없음 */
+            }
+
+            .slot-item {
+                font-size: 0.9em; /* 모바일 폰트 크기 조정 */
+                height: 50px; /* combined-slot-display의 높이와 동일 */
+                line-height: 50px; /* 텍스트 세로 중앙 정렬 */
             }
 
             .title {
@@ -362,18 +457,6 @@
                 width: 28px; /* 모바일 크기 조정 */
                 height: 28px; /* 모바일 크기 조정 */
                 font-size: 0.9em; /* 모바일 폰트 크기 조정 */
-            }
-
-            .slot-machine {
-                height: 70px; /* 모바일 높이 조정 */
-                border-width: 3px;
-                margin-bottom: 1em; /* 모바일 마진 조정 */
-            }
-
-            .slot-item {
-                font-size: 1.1em; /* 모바일 폰트 크기 조정 */
-                height: 70px; /* 모바일 높이 조정 */
-                line-height: 70px; /* 모바일 높이 조정 */
             }
 
             .result-text {
@@ -426,8 +509,7 @@
                 margin-right: 0.4em; /* 모바일 간격 조정 */
             }
 
-            #restaurantListEdit li .edit-btn,
-            #restaurantListEdit li .delete-btn {
+            #restaurantListEdit li .edit-btn, #restaurantListEdit li .delete-btn {
                 font-size: 0.75em; /* 모바일 폰트 크기 조정 */
                 padding: 0.3em 0.6em; /* 모바일 패딩 조정 */
             }
@@ -436,6 +518,7 @@
                 width: calc(100% - 90px); /* 모바일 버튼 너비 고려 */
                 padding: 0.3em; /* 모바일 패딩 조정 */
             }
+
             .help-modal-content h2 {
                 font-size: 1.4em; /* 모바일 폰트 크기 조정 */
             }
@@ -454,28 +537,36 @@
     <div class="container">
         <button class="help-button" id="helpButton">?</button>
         <h1 class="title">
-            <span class="emoji">✈️</span>
-            오늘의 점심
-            <span class="emoji">✈️</span>
+            <span class="emoji">✈️</span> 오늘의 점심 <span class="emoji">✈️</span>
         </h1>
 
-        <div class="slot-machine">
-            <div class="slot-content-wrapper"></div>
+        <!-- 카테고리 선택 드롭다운과 룰렛 디스플레이를 포함하는 단일 창 -->
+        <div class="combined-slot-display">
+            <div class="category-selector-area">
+                <select id="categorySelect">
+                    <!-- 옵션은 JavaScript에서 동적으로 추가됩니다. -->
+                </select>
+            </div>
+            <div class="roulette-display-area">
+                <div class="slot-content-wrapper"></div>
+            </div>
         </div>
 
         <p class="result-text"></p>
-
+        <!-- 주소 링크 표시 영역 삭제 -->
         <div class="button-container">
             <button id="spinButton" class="btn">돌리기</button>
+            <button id="mapButton" class="btn" style="display: none;">지도 보기</button>
             <button id="addButton" class="btn">추가하기</button>
             <button id="editButton" class="btn">목록편집</button>
         </div>
     </div>
-    
+
     <footer class="footer">
         <p>&copy; 2025 인사전략팀 인턴 한세진</p>
     </footer>
 
+    <!-- 식당 추가 모달 -->
     <div id="addModal" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
@@ -485,6 +576,7 @@
         </div>
     </div>
 
+    <!-- 식당 목록 편집 모달 -->
     <div id="editModal" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
@@ -493,11 +585,13 @@
         </div>
     </div>
 
+    <!-- 도움말 모달 -->
     <div id="helpModal" class="modal">
         <div class="modal-content help-modal-content">
             <span class="close-button">&times;</span>
             <h2>오늘의 점심 룰렛🍽️</h2>
-            <p><span class="emoji">🤔</span>점심에 뭘 먹을지 고민될 때, '돌리기' 버튼을 눌러 식당을 정해보세요!</p>
+            <p><span class="emoji">🤔</span>점심에 뭘 먹을지 고민될 때, 카테고리를 선택하고 '돌리기' 버튼을 눌러 식당을 정해보세요!</p>
+            <p><span class="emoji">🗺️</span>룰렛 결과가 나오면 '지도 보기' 버튼을 눌러 식당 위치를 확인할 수 있어요!</p>
             <p><span class="emoji">➕</span>새로운 식당을 추가하고 싶다면 '추가하기' 버튼을 눌러 목록에 추가할 수 있어요!</p>
             <p><span class="emoji">✏️</span>기존 목록을 수정하거나 삭제하고 싶다면 '목록 편집' 버튼을 활용하세요!</p>
             <p><span class="emoji">✨</span>기존 목록은 마곡 내 페이코 식권을 사용할 수 있는 식당이며 모든 곳의 당첨 확률은 동일합니다!</p>
@@ -509,14 +603,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const slotMachine = document.querySelector('.slot-machine');
+            // DOM 요소 가져오기
+            const slotMachine = document.querySelector('.combined-slot-display');
             const slotContentWrapper = document.querySelector('.slot-content-wrapper');
             const resultText = document.querySelector('.result-text');
             const spinButton = document.getElementById('spinButton');
             const addButton = document.getElementById('addButton');
             const editButton = document.getElementById('editButton');
             const helpButton = document.getElementById('helpButton');
+            const mapButton = document.getElementById('mapButton'); // 지도 보기 버튼
+            const categorySelect = document.getElementById('categorySelect'); // 카테고리 선택 드롭다운
 
+            // 모달 관련 요소
             const addModal = document.getElementById('addModal');
             const editModal = document.getElementById('editModal');
             const helpModal = document.getElementById('helpModal');
@@ -525,254 +623,510 @@
             const addRestaurantToListButton = document.getElementById('addRestaurantToList');
             const restaurantListEdit = document.getElementById('restaurantListEdit');
 
-            let restaurants = [];
-            let itemHeight = 0;
-            let isSpinning = false;
+            // 식당 데이터 정의 (카테고리별) - 이름, 주소, 직접 연결할 지도 링크 포함
+            // mapLink 필드는 선택 사항이며, 유효한 URL이 있을 경우 직접 해당 링크로 이동합니다.
+            // mapLink가 없거나 유효하지 않은 경우 address 필드로 네이버 지도 검색을 수행합니다.
+            const defaultRestaurantsByCategory = {
+                "전체": [], // 전체 카테고리는 모든 식당을 포함하도록 초기화 (아래에서 채워짐)
+                "한식": [
+                    { name: "초애삼계탕", address: "서울 강서구 마곡동 초애삼계탕", mapLink: "https://naver.me/GpCTzwlc" },
+                    { name: "여가반상", address: "서울 강서구 마곡동 여가반상", mapLink: "https://naver.me/xk1XQLA4" },
+                    { name: "오국밥", address: "서울 강서구 마곡동 오국밥", mapLink: "https://naver.me/x67y6M7s" },
+                    { name: "한소쿰", address: "서울 강서구 마곡동 한소쿰", mapLink: "https://naver.me/xY4LACRD" },
+                    { name: "월수금통돼지김치찌개", address: "서울 강서구 마곡동 월수금통돼지김치찌개", mapLink: "https://naver.me/5pws5EYL" },
+                    { name: "꽈리칼국수", address: "서울 강서구 마곡동 꽈리칼국수", mapLink: "https://naver.me/513NweWA" },
+                    { name: "본도시락", address: "서울 강서구 마곡동 본도시락", mapLink: "https://naver.me/FA2fvLXu" },
+                    { name: "신의한국수", address: "서울 강서구 마곡동 신의한국수", mapLink: "https://naver.me/FqWtUMi6" },
+                    { name: "무한육채미", address: "서울 강서구 마곡동 무한육채미", mapLink: "https://naver.me/xprAkQoT" },
+                    { name: "영미당 닭갈비", address: "서울 강서구 마곡동 영미당 닭갈비", mapLink: "https://naver.me/FV7YjMyh" },
+                    { name: "엄마손뷔페", address: "서울 강서구 마곡동 엄마손뷔페", mapLink: "https://naver.me/54LbNtgZ" },
+                    { name: "마곡회관", address: "서울 강서구 마곡동 마곡회관", mapLink: "https://naver.me/I55anJ2J" },
+                    { name: "대가원", address: "서울 강서구 마곡동 대가원", mapLink: "https://naver.me/55rmiKFr" },
+                    { name: "명동칼국수", address: "서울 강서구 마곡동 명동칼국수", mapLink: "https://naver.me/5T4AmXqX" },
+                    { name: "조선부뚜막", address: "서울 강서구 마곡동 조선부뚜막", mapLink: "https://naver.me/GzE9Dtnd" },
+                    { name: "뚜부집", address: "서울 강서구 마곡동 울동네뚜부집", mapLink: "https://naver.me/F42MNyRU" },
+                    { name: "부대옥", address: "서울 강서구 마곡동 부대옥", mapLink: "https://naver.me/FSw7n9GP" },
+                    { name: "순대실록", address: "서울 강서구 마곡동 순대실록", mapLink: "https://naver.me/GoD7FW7R" },
+                    { name: "설반", address: "서울 강서구 마곡동 설반", mapLink: "https://naver.me/FsRsrZ2M" },
+                    { name: "당산포차 점심뷔페", address: "서울 강서구 마곡동 당산포차 점심뷔페", mapLink: "https://naver.me/GRo4Numf" },
+                    { name: "본죽&비빔밥cafe", address: "서울 강서구 마곡동 본죽&비빔밥cafe", mapLink: "https://naver.me/FvEj2Pvq" },
+                    { name: "종로계림닭도리탕원조", address: "서울 강서구 마곡동 종로계림닭도리탕원조", mapLink: "" },
+                    { name: "박가부대", address: "서울 강서구 마곡동 박가부대", mapLink: "https://naver.me/xRhE8QMx" },
+                    { name: "전주현대옥", address: "서울 강서구 마곡동 전주현대옥", mapLink: "https://naver.me/5bVsIqBm" },
+                    { name: "SO GON", address: "서울 강서구 마곡동 SO GON", mapLink: "https://naver.me/Fk7g0wIk" },
+                    { name: "미숯랭", address: "서울 강서구 마곡동 미숯랭", mapLink: "https://naver.me/xa5RTiRU" },             
+                    { name: "사위식당", address: "서울 강서구 마곡동 사위식당", mapLink: "https://naver.me/xTT6uHvZ" },
+                    { name: "진마루", address: "서울 강서구 마곡동 진마루", mapLink: "https://naver.me/FeXASwF5" }
+                ],
+                
+                "분식": [
+                    { name: "코코의 식탁", address: "서울 강서구 마곡동 코코의 식탁", mapLink: "https://naver.me/xExkRGwi" },
+                    { name: "보영만두", address: "서울 강서구 마곡동 보영만두", mapLink: "https://naver.me/xeAPlmJQ" },
+                    { name: "소풍가는날", address: "서울 강서구 마곡동 소풍가는날", mapLink: "https://naver.me/GTnApFau" },
+                    { name: "마곡동소담김밥", address: "서울 강서구 마곡동 마곡동소담김밥", mapLink: "https://naver.me/G0DNRTM1" }
+                ],
+                "일식": [
+                    { name: "센몬텐", address: "서울 강서구 마곡동 센몬텐", mapLink: "https://naver.me/5xjpM4pG" },
+                    { name: "찌미오", address: "서울 강서구 마곡동 찌미오", mapLink: "https://naver.me/G65twnCj" },
+                    { name: "계단라멘", address: "서울 강서구 마곡동 계단라멘", mapLink: "https://naver.me/GyYb263I" },
+                    { name: "화월", address: "서울 강서구 마곡동 화월", mapLink: "https://naver.me/GmbWZAP9" },
+                    { name: "이자카야 하루", address: "서울 강서구 마곡동 이자카야 하루", mapLink: "https://naver.me/xExFMpOY" },
+                    { name: "민영활어공장", address: "서울 강서구 마곡동 민영활어공장", mapLink: "https://naver.me/5Q37Ao9T" },
+                /*  { name: "어달스시", address: "서울 강서구 마곡동 어달스시", mapLink: "" },*/
+                    { name: "오모이", address: "서울 강서구 마곡동 오모이", mapLink: "https://naver.me/54LbRGcD" },
+                    { name: "초이다이닝", address: "서울 강서구 마곡동 초이다이닝", mapLink: "https://naver.me/GvcTOjkI" },
+                    { name: "후라토식당", address: "서울 강서구 마곡동 후라토식당", mapLink: "https://naver.me/xOxHBCzt" }
+                ],
+                "중식": [
+                    { name: "중식당 청가", address: "서울 강서구 마곡동 중식당 청가", mapLink: "https://naver.me/GQ15puiH" },
+                    { name: "홍콩반점", address: "서울 강서구 마곡동 홍콩반점", mapLink: "https://naver.me/FFGmhkCe" },
+                    { name: "짬뽕지존", address: "서울 강서구 마곡동 짬뽕지존", mapLink: "https://naver.me/FK5QcNS2" },
+                    { name: "란콰이펑누들", address: "서울 강서구 마곡동 란콰이펑누들", mapLink: "https://naver.me/FRLN0I9M" }
+                ],
+                "양식": [
+                    { name: "고릴라쉐프", address: "서울 강서구 마곡동 고릴라쉐프", mapLink: "https://naver.me/xAFCl2CA" },
+                    { name: "버거킹(마곡점/ 마곡원그로브몰D점)", address: "서울 강서구 마곡동 버거킹", mapLink: "" },
+                    { name: "헤비스테이크", address: "서울 강서구 마곡동 헤비스테이크", mapLink: "https://naver.me/xKERW8FF" },
+                    { name: "베어스타코", address: "서울 강서구 마곡동 베어스타코", mapLink: "https://naver.me/GfCkFu0C" }
+                ],
+                "샐러드": [
+                    { name: "저스트샐러드", address: "서울 강서구 마곡동 저스트샐러드", mapLink: "https://naver.me/xGIhLV6A" },
+                    { name: "올라포케", address: "서울 강서구 마곡동 올라포케", mapLink: "https://naver.me/FQVXPbP2" },                    
+                    { name: "샐러디", address: "서울 강서구 마곡동 샐러디", mapLink: "https://naver.me/Fioxx1je" },
+                    { name: "훅트포케", address: "서울 강서구 마곡동 훅트포케", mapLink: "https://naver.me/FBeXgiSD" },                    
+                    { name: "샐모닝", address: "서울 강서구 마곡동 샐모닝", mapLink: "https://naver.me/Fio7VcVs" }
+                ],
+                "카페": [
+                    { name: "힐 베이글", address: "서울 강서구 마곡동 힐 베이글", mapLink: "https://naver.me/GdymuQCD" },                    
+                    { name: "하우슬리", address: "서울 강서구 마곡동 하우슬리", mapLink: "https://naver.me/5wWeeefo" },
+                    { name: "해리스헤이스", address: "서울 강서구 마곡동 해리스헤이스", mapLink: "https://naver.me/FHlgE8BR" }, 
+                    { name: "시도니아", address: "서울 강서구 마곡동 시도니아", mapLink: "https://naver.me/GCvpZEvn" },
+                    { name: "제이그램", address: "서울 강서구 마곡동 제이그램", mapLink: "https://naver.me/GMmKOzIR" },
+                    { name: "스타벅스(마곡점/마곡GMG점/마곡사이언스타워R점/원그로브B1점)", address: "서울 강서구 마곡동 스타벅스", mapLink: "" },
+                    { name: "파리바게뜨", address: "서울 강서구 마곡동 파리바게뜨", mapLink: "https://naver.me/xwmsZZEO" },
+                    { name: "오지오커피", address: "서울 강서구 마곡동 오지오커피", mapLink: "https://naver.me/GyYbmK4Z" },
+                    { name: "나이스카페인클럽", address: "서울 강서구 마곡동 나이스카페인클럽", mapLink: "https://naver.me/5D8Yv29I" },
+                    { name: "커피사피엔스", address: "서울 강서구 마곡동 커피사피엔스", mapLink: "https://naver.me/FxFKqklm" },
+                    { name: "앤덴커피", address: "서울 강서구 마곡동 앤덴커피", mapLink: "https://naver.me/FK5vnQCx" },
+                    { name: "카페디얼", address: "서울 강서구 마곡동 카페디얼", mapLink: "https://naver.me/FLy7UY7r" },
+                    { name: "로스터리락온", address: "서울 강서구 마곡동 로스터리락온", mapLink: "https://naver.me/xY4MxryG" },
+                    { name: "콜트클럽", address: "서울 강서구 마곡동 콜트클럽", mapLink: "https://naver.me/xwmqyFI6" },
+                    { name: "컴포즈커피", address: "서울 강서구 마곡동 컴포즈커피", mapLink: "https://naver.me/xoH8WkV2" }
+                ]
+            };
 
-            const defaultRestaurants = [
-                '샐모닝', '센몬텐', '제이그램', '초애삼계탕', '하우슬리', '헤리스헤이스', '여가반상', 
-                '스타벅스', '베어스타코', '파리바게뜨', '코코의 식탁', '오국밥', '보영만두', '한소쿰', 
-                '오지오커피', '소풍가는날', '나이스카페인클럽', '저스트샐러드', '올라포케', '찌미오', 
-                '커피사피엔스', '월수금', '꽈리칼국수', '본도시락', '계단라멘', '신의한국수', '훅트포케', 
-                '육채미', '영미당 닭갈비', '엄마손뷔페', '돈태백', '마곡회관', '힐 베이글', '앤덴커피', 
-                '대가원', '명동칼국수', '중식당 청가', '화월', '홍콩반점', '카페디얼', '이자카야 하루', 
-                '마곡동소담김밥', '고릴라쉐프', 'SO GON', '로스터리락온', '민영활어공장', '조선부뚜막', 
-                '울동네뚜부집', '어달스시', '부대옥', '순대실록', '스타벅스', '오모이', '설반', '사위식당', 
-                '진마루', '짬뽕지존', '버거킹', '헤비스테이크', '미숯랭', '샐러디', '초이다이닝', 
-                '란콰이펑누들', '시도니아', '후라토식당', '당산포차 점심뷔페', '콜트클럽', '본죽&비빔밥cafe', 
-                '컴포즈커피', '샐러디', '종로계림닭도리탕원조', '박가부대', '전주현대옥'
-            ];
+            // 사용자가 추가/삭제한 식당을 저장할 객체 (카테고리별)
+            let userRestaurants = {};
 
+            let itemHeight = 100; // 슬롯 아이템 하나의 높이 (CSS와 동기화)
+            let isSpinning = false; // 룰렛 회전 중인지 여부
+            let lastResultRestaurant = null; // 마지막 룰렛 결과 식당 객체 (이름과 주소 포함)
+
+            // 로컬 스토리지에서 식당 목록 불러오기
             function loadRestaurants() {
-                const storedRestaurants = localStorage.getItem('restaurants');
-                if (storedRestaurants) {
-                    restaurants = JSON.parse(storedRestaurants);
+                const storedUserRestaurants = localStorage.getItem('userRestaurants');
+                if (storedUserRestaurants) {
+                    userRestaurants = JSON.parse(storedUserRestaurants);
+                    // 기존 데이터에 mapLink 필드가 없을 경우를 대비하여 추가
+                    for (const category in userRestaurants) {
+                        userRestaurants[category] = userRestaurants[category].map(item => ({
+                            name: item.name,
+                            address: item.address || `마곡 ${item.name} 주소 (수정 필요)`, // 기존 주소 없으면 임시 주소 할당
+                            mapLink: item.mapLink || "" // mapLink 없으면 빈 문자열 할당
+                        }));
+                    }
                 } else {
-                    restaurants = [...defaultRestaurants];
-                    saveRestaurants();
+                    // 처음 로드 시 기본 식당 목록을 userRestaurants에 깊은 복사
+                    for (const category in defaultRestaurantsByCategory) {
+                        userRestaurants[category] = defaultRestaurantsByCategory[category].map(item => ({ ...item }));
+                    }
                 }
+                // '전체' 카테고리 업데이트
+                updateAllCategory();
                 renderSlotItems();
+                renderEditList();
             }
 
+            // '전체' 카테고리 식당 목록을 모든 카테고리의 식당으로 업데이트
+            function updateAllCategory() {
+                let allRestaurants = [];
+                for (const category in userRestaurants) {
+                    if (category !== "전체") { // '전체' 카테고리 자체는 포함하지 않음
+                        allRestaurants = allRestaurants.concat(userRestaurants[category]);
+                    }
+                }
+                // 중복 제거 (이름 기준으로 중복 제거)
+                const uniqueRestaurants = [];
+                const seenNames = new Set();
+                allRestaurants.forEach(restaurant => {
+                    if (!seenNames.has(restaurant.name)) {
+                        uniqueRestaurants.push(restaurant);
+                        seenNames.add(restaurant.name);
+                    }
+                });
+                userRestaurants["전체"] = uniqueRestaurants;
+            }
+
+            // 로컬 스토리지에 식당 목록 저장
             function saveRestaurants() {
-                localStorage.setItem('restaurants', JSON.stringify(restaurants));
+                localStorage.setItem('userRestaurants', JSON.stringify(userRestaurants));
+                updateAllCategory(); // 저장 후 '전체' 카테고리도 업데이트
+                renderSlotItems(); // 슬롯 아이템 다시 렌더링
             }
 
-            function renderSlotItems() {
-                slotContentWrapper.innerHTML = '';
+            // 카테고리 드롭다운 옵션 렌더링
+            function renderCategoryOptions() {
+                categorySelect.innerHTML = ''; // 기존 옵션 초기화
+                const categories = Object.keys(defaultRestaurantsByCategory); // 기본 카테고리 순서 유지
 
-                if (restaurants.length === 0) {
-                    const defaultItem = document.createElement('div');
-                    defaultItem.classList.add('slot-item');
-                    defaultItem.textContent = '식당을 추가해주세요!';
-                    slotContentWrapper.appendChild(defaultItem);
-                    gsap.set(slotContentWrapper, { y: 0 });
-                    itemHeight = defaultItem.offsetHeight;
+                // '전체' 카테고리를 가장 위에 추가
+                const allOption = document.createElement('option');
+                allOption.value = "전체";
+                allOption.textContent = "전체";
+                categorySelect.appendChild(allOption);
+
+                // 나머지 카테고리 추가
+                categories.forEach(category => {
+                    if (category !== "전체") {
+                        const option = document.createElement('option');
+                        option.value = category;
+                        option.textContent = category;
+                        categorySelect.appendChild(option);
+                    }
+                });
+
+                // 이전에 선택된 카테고리 불러오기
+                const savedCategory = localStorage.getItem('selectedCategory');
+                if (savedCategory && categories.includes(savedCategory)) {
+                    categorySelect.value = savedCategory;
+                } else {
+                    categorySelect.value = "전체"; // 기본값 설정
+                }
+            }
+
+            // 현재 선택된 카테고리의 식당 목록 가져오기
+            function getCurrentCategoryRestaurants() {
+                const selectedCategory = categorySelect.value;
+                return userRestaurants[selectedCategory] || [];
+            }
+
+            // 룰렛 슬롯 아이템 렌더링
+            function renderSlotItems() {
+                slotContentWrapper.innerHTML = ''; // 기존 아이템 초기화
+                const currentRestaurants = getCurrentCategoryRestaurants();
+
+                if (currentRestaurants.length === 0) {
+                    const noItem = document.createElement('div');
+                    noItem.classList.add('slot-item');
+                    noItem.textContent = "식당을 추가해주세요!";
+                    slotContentWrapper.appendChild(noItem);
+                    spinButton.disabled = true; // 식당이 없으면 돌리기 버튼 비활성화
+                    mapButton.style.display = 'none'; // 지도 버튼 숨기기
+                    resultText.textContent = ""; // 결과 텍스트 초기화
                     return;
+                } else {
+                    spinButton.disabled = false; // 식당이 있으면 돌리기 버튼 활성화
                 }
 
-                const repeatCount = 10;
+                // 룰렛 효과를 위해 목록을 여러 번 반복하여 추가
+                const repeatCount = 3; // 충분히 길게 보이도록 반복 횟수 설정
                 for (let i = 0; i < repeatCount; i++) {
-                    restaurants.forEach(restaurant => {
-                        const div = document.createElement('div');
-                        div.classList.add('slot-item');
-                        div.textContent = restaurant;
-                        slotContentWrapper.appendChild(div);
+                    currentRestaurants.forEach(restaurant => {
+                        const item = document.createElement('div');
+                        item.classList.add('slot-item');
+                        item.textContent = restaurant.name; // 식당 이름 표시
+                        slotContentWrapper.appendChild(item);
                     });
                 }
-
-                itemHeight = slotContentWrapper.querySelector('.slot-item').offsetHeight;
-                gsap.set(slotContentWrapper, { y: 0 });
+                // renderSlotItems가 호출될 때마다 itemHeight를 업데이트하여 정확성을 높입니다.
+                if (slotContentWrapper.querySelector('.slot-item')) {
+                    itemHeight = slotContentWrapper.querySelector('.slot-item').offsetHeight;
+                }
             }
 
-            spinButton.addEventListener('click', () => {
-                if (restaurants.length === 0) {
-                    alert('식당 목록이 비어있습니다. 식당을 추가해주세요!');
-                    return;
-                }
-                if (isSpinning) {
+            // 룰렛 돌리기 함수
+            function spinSlot() {
+                if (isSpinning) return; // 이미 회전 중이면 중복 실행 방지
+
+                const currentRestaurants = getCurrentCategoryRestaurants();
+                if (currentRestaurants.length === 0) {
+                    resultText.textContent = "선택된 카테고리에 식당이 없습니다.";
                     return;
                 }
 
                 isSpinning = true;
-                spinButton.disabled = true;
-                resultText.innerHTML = '';
+                spinButton.disabled = true; // 돌리기 버튼 비활성화
+                mapButton.style.display = 'none'; // 지도 버튼 숨기기
+                resultText.textContent = ""; // 결과 텍스트 초기화
 
-                gsap.killTweensOf(slotContentWrapper);
-                gsap.set(slotContentWrapper, { y: 0 });
+                // Ensure itemHeight is correct before spin
+                const tempSlotItem = slotContentWrapper.querySelector('.slot-item');
+                if (tempSlotItem) {
+                    itemHeight = tempSlotItem.offsetHeight;
+                } else {
+                    console.error("No slot items to determine height, cannot spin.");
+                    isSpinning = false;
+                    spinButton.disabled = false;
+                    return;
+                }
 
-                const totalOriginalItems = restaurants.length;
-                const selectedOriginalIndex = Math.floor(Math.random() * totalOriginalItems);
+                // 무작위로 당첨될 식당 인덱스 선택
+                const randomIndex = Math.floor(Math.random() * currentRestaurants.length);
+                const winningRestaurant = currentRestaurants[randomIndex]; // 식당 객체 가져오기
+                lastResultRestaurant = winningRestaurant; // 결과 식당 객체 저장
 
-                const revolutions = 5;
-                const finalTargetIndex = (revolutions * totalOriginalItems) + selectedOriginalIndex;
+                // 최종 정지 위치 계산: 중간에 있는 반복된 목록의 당첨 식당으로 이동
+                // (예: repeatCount가 3이면, 두 번째 반복 블록의 해당 식당으로 정지)
+                const targetBlockIndex = 1; // 두 번째 블록 (0부터 시작)
+                const finalPositionInWrapper = (targetBlockIndex * currentRestaurants.length) + randomIndex;
+                const finalY = -finalPositionInWrapper * itemHeight;
 
-                const targetY = -finalTargetIndex * itemHeight;
+                // 애니메이션 시작 지점 계산: 충분한 회전을 보여주기 위해 최종 위치보다 훨씬 위에 있는 고정된 지점에서 시작
+                const minSpinDistance = 50 * itemHeight; // 최소 50개 아이템 높이만큼 스크롤
+                const initialY = -(minSpinDistance + Math.abs(finalY)); 
 
+                // 즉시 초기 위치 설정 (애니메이션 없이)
+                gsap.set(slotContentWrapper, { y: initialY });
+
+                // GSAP를 이용한 애니메이션: 시작점에서 최종점까지 부드럽게 감속
                 gsap.to(slotContentWrapper, {
-                    y: targetY,
-                    duration: 5,
-                    ease: "power4.out",
-                    overwrite: "auto",
+                    y: finalY,
+                    duration: 4, // 애니메이션 지속 시간
+                    ease: "power3.out", // 부드러운 감속 효과 (처음엔 빠르고 점점 느려지다 멈춤)
                     onComplete: () => {
-                        const currentY = gsap.getProperty(slotContentWrapper, "y");
-                        const stoppedItemIndex = Math.round(Math.abs(currentY) / itemHeight);
-                        const actualSelectedRestaurantIndex = stoppedItemIndex % totalOriginalItems;
-                        const actualSelectedRestaurant = restaurants[actualSelectedRestaurantIndex];
-
-                        resultText.innerHTML = `오늘은 <span class="result-restaurant-name">${actualSelectedRestaurant}</span>에서 먹어요!`;
-                        spinButton.disabled = false;
                         isSpinning = false;
-
-                        gsap.set(slotContentWrapper, { y: -(revolutions * totalOriginalItems + selectedOriginalIndex) * itemHeight });
+                        spinButton.disabled = false; // 돌리기 버튼 활성화
+                        // 문구 변경: '오늘의 점심은 [식당이름]!' -> '오늘은 [식당이름]에서 먹어요!'
+                        resultText.innerHTML = `오늘은 <span class="result-restaurant-name">${winningRestaurant.name}</span>에서 먹어요!`;
+                        
+                        mapButton.style.display = 'inline-block'; // 지도 버튼 표시
+                        // 애니메이션 종료 후 정확한 위치에 정렬 (픽셀 오차 보정)
+                        gsap.set(slotContentWrapper, { y: finalY });
                     }
                 });
-            });
+            }
 
-            addRestaurantToListButton.addEventListener('click', () => {
-                const inputText = restaurantInput.value.trim();
-                if (inputText) {
-                    const newRestaurants = inputText.split(/[\n,]+/).map(item => item.trim()).filter(item => item.length > 0);
-                    let addedCount = 0;
-
-                    newRestaurants.forEach(newRestaurant => {
-                        if (newRestaurant && !restaurants.includes(newRestaurant)) {
-                            restaurants.push(newRestaurant);
-                            addedCount++;
-                        }
-                    });
-
-                    if (addedCount > 0) {
-                        saveRestaurants();
-                        renderSlotItems();
-                        alert(`${addedCount}개의 식당이 목록에 추가되었습니다!`);
-                        addModal.style.display = 'none';
-                    } else if (newRestaurants.length > 0) {
-                        alert('이미 존재하는 식당이거나 유효하지 않은 입력입니다.');
-                    } else {
-                        alert('식당 이름을 입력해주세요.');
-                    }
-                } else {
-                    alert('식당 이름을 입력해주세요.');
-                }
-            });
-
+            // 식당 추가 모달 열기
             addButton.addEventListener('click', () => {
                 addModal.style.display = 'flex';
-                restaurantInput.value = '';
-                restaurantInput.focus();
+                restaurantInput.value = ''; // 입력창 초기화
             });
 
+            // 식당 목록 편집 모달 열기
             editButton.addEventListener('click', () => {
-                renderEditList();
                 editModal.style.display = 'flex';
+                renderEditList(); // 목록 다시 렌더링
             });
 
+            // 도움말 모달 열기
             helpButton.addEventListener('click', () => {
                 helpModal.style.display = 'flex';
             });
 
+            // 지도 보기 버튼 클릭 시 네이버 지도 열기
+            mapButton.addEventListener('click', () => {
+                if (lastResultRestaurant) {
+                    let searchUrl;
+                    // mapLink가 유효한 URL인지 확인 (http 또는 https로 시작)
+                    if (lastResultRestaurant.mapLink && (lastResultRestaurant.mapLink.startsWith('http://') || lastResultRestaurant.mapLink.startsWith('https://'))) {
+                        // 직접 링크가 있다면 해당 링크로 이동
+                        searchUrl = lastResultRestaurant.mapLink;
+                    } else {
+                        // 직접 링크가 없거나 유효하지 않으면 주소 또는 이름으로 검색
+                        const addressToSearch = lastResultRestaurant.address && !lastResultRestaurant.address.includes('수정 필요') ? lastResultRestaurant.address : lastResultRestaurant.name;
+                        searchUrl = `https://map.naver.com/p/search/${encodeURIComponent(addressToSearch)}`;
+                    }
+                    window.open(searchUrl, '_blank');
+                }
+            });
+
+            // 식당 추가 버튼 클릭 이벤트
+            addRestaurantToListButton.addEventListener('click', () => {
+                const input = restaurantInput.value.trim();
+                if (input) {
+                    const newRestaurantNames = input.split(/[\n,]+/).map(item => item.trim()).filter(item => item !== '');
+                    const selectedCategory = categorySelect.value;
+
+                    if (!userRestaurants[selectedCategory]) {
+                        userRestaurants[selectedCategory] = [];
+                    }
+
+                    newRestaurantNames.forEach(newRestName => {
+                        // 새로운 식당은 임시 주소와 빈 mapLink와 함께 객체로 저장
+                        const newRestaurantObject = { name: newRestName, address: `마곡 ${newRestName} 주소 (수정 필요)`, mapLink: "" };
+                        // 중복 추가 방지 (이름 기준으로 확인)
+                        if (!userRestaurants[selectedCategory].some(r => r.name === newRestName)) {
+                            userRestaurants[selectedCategory].push(newRestaurantObject);
+                        }
+                    });
+
+                    saveRestaurants(); // 변경사항 저장
+                    renderSlotItems(); // 슬롯 아이템 업데이트
+                    restaurantInput.value = ''; // 입력창 초기화
+                    addModal.style.display = 'none'; // 모달 닫기
+                }
+            });
+
+            // 편집 목록 렌더링 함수
             function renderEditList() {
-                restaurantListEdit.innerHTML = '';
-                if (restaurants.length === 0) {
-                    restaurantListEdit.innerHTML = '<li>등록된 식당이 없습니다.</li>';
+                restaurantListEdit.innerHTML = ''; // 목록 초기화
+                const selectedCategory = categorySelect.value;
+                const restaurantsToEdit = userRestaurants[selectedCategory] || [];
+
+                if (restaurantsToEdit.length === 0) {
+                    const li = document.createElement('li');
+                    li.textContent = "이 카테고리에 식당이 없습니다.";
+                    restaurantListEdit.appendChild(li);
                     return;
                 }
-                restaurants.forEach((restaurant, index) => {
-                    const listItem = document.createElement('li');
-                    const span = document.createElement('span');
-                    span.textContent = restaurant;
-                    listItem.appendChild(span);
 
-                    const buttonWrapper = document.createElement('div');
-                    buttonWrapper.classList.add('button-wrapper');
-
-                    const editButton = document.createElement('button');
-                    editButton.classList.add('edit-btn');
-                    editButton.textContent = '수정';
-                    editButton.dataset.index = index;
-                    buttonWrapper.appendChild(editButton);
-
-                    const deleteButton = document.createElement('button');
-                    deleteButton.classList.add('delete-btn');
-                    deleteButton.textContent = '삭제';
-                    deleteButton.dataset.index = index;
-                    buttonWrapper.appendChild(deleteButton);
-
-                    listItem.appendChild(buttonWrapper);
-                    restaurantListEdit.appendChild(listItem);
+                restaurantsToEdit.forEach((restaurant, index) => { // restaurant는 이제 객체
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <span>${restaurant.name}</span>
+                        <div class="button-wrapper">
+                            <button class="edit-btn" data-index="${index}">수정</button>
+                            <button class="delete-btn" data-index="${index}">삭제</button>
+                        </div>
+                    `;
+                    restaurantListEdit.appendChild(li);
                 });
 
-                document.querySelectorAll('.edit-btn').forEach(button => {
-                    button.addEventListener('click', (e) => {
-                        const indexToEdit = parseInt(e.target.dataset.index);
-                        const listItem = e.target.closest('li');
-                        const restaurantSpan = listItem.querySelector('span');
-                        const originalName = restaurantSpan.textContent;
+                // 수정 및 삭제 버튼 이벤트 리스너 추가
+                addEditDeleteListeners();
+            }
 
-                        const inputField = document.createElement('input');
-                        inputField.type = 'text';
-                        inputField.classList.add('edit-input');
-                        inputField.value = originalName;
+            // 수정 및 삭제 버튼 이벤트 리스너 추가 함수
+            function addEditDeleteListeners() {
+                const editButtons = document.querySelectorAll('#restaurantListEdit .edit-btn');
+                const deleteButtons = document.querySelectorAll('#restaurantListEdit .delete-btn');
+                const selectedCategory = categorySelect.value;
 
-                        listItem.replaceChild(inputField, restaurantSpan);
-                        inputField.focus();
+                editButtons.forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const indexToEdit = parseInt(event.target.dataset.index);
+                        const currentRestaurant = userRestaurants[selectedCategory][indexToEdit]; // 식당 객체 가져오기
+                        const currentRestaurantName = currentRestaurant.name; // 객체에서 이름 가져오기
+                        const li = event.target.closest('li');
+                        const span = li.querySelector('span');
 
-                        const saveChanges = () => {
-                            const newName = inputField.value.trim();
-                            if (newName && newName !== originalName) {
-                                if (!restaurants.includes(newName)) {
-                                    restaurants[indexToEdit] = newName;
-                                    saveRestaurants();
-                                    renderEditList();
-                                    renderSlotItems();
-                                } else {
-                                    alert('이미 존재하는 이름입니다. 다른 이름을 입력해주세요.');
-                                    const tempSpan = document.createElement('span');
-                                    tempSpan.textContent = originalName;
-                                    listItem.replaceChild(tempSpan, inputField);
+                        // 수정 입력 필드로 변경
+                        span.innerHTML = `<input type="text" class="edit-input" value="${currentRestaurantName}">`;
+                        const editInput = span.querySelector('.edit-input');
+                        editInput.focus();
+
+                        // 수정 버튼을 저장 버튼으로 변경
+                        event.target.textContent = '저장';
+                        event.target.classList.remove('edit-btn');
+                        event.target.classList.add('save-btn');
+
+                        // 저장 버튼 이벤트 리스너 추가
+                        event.target.addEventListener('click', (saveEvent) => {
+                            const newName = editInput.value.trim();
+                            if (newName && newName !== currentRestaurantName) {
+                                // 중복 확인 (현재 카테고리 내에서 이름으로만 확인)
+                                if (userRestaurants[selectedCategory].some(r => r.name === newName)) {
+                                    showCustomAlert("이미 존재하는 식당 이름입니다.");
+                                    return;
                                 }
+                                userRestaurants[selectedCategory][indexToEdit].name = newName; // 객체의 이름 속성만 업데이트
+                                // 주소와 mapLink는 현재 편집 UI에서 수정하지 않으므로 그대로 유지
+                                saveRestaurants();
+                                renderEditList(); // 목록 다시 렌더링
                             } else {
-                                const tempSpan = document.createElement('span');
-                                tempSpan.textContent = originalName;
-                                listItem.replaceChild(tempSpan, inputField);
+                                renderEditList(); // 변경사항 없으면 원래대로 돌림
                             }
-                        };
-
-                        inputField.addEventListener('keypress', (event) => {
-                            if (event.key === 'Enter') {
-                                saveChanges();
-                            }
-                        });
-
-                        inputField.addEventListener('blur', () => {
-                            saveChanges();
-                        });
+                        }, { once: true }); // 한 번만 실행되도록 설정
                     });
                 });
 
-                document.querySelectorAll('.delete-btn').forEach(button => {
-                    button.addEventListener('click', (e) => {
-                        const indexToDelete = parseInt(e.target.dataset.index);
-                        const deletedRestaurant = restaurants[indexToDelete];
-                        if (confirm(`${deletedRestaurant}을(를) 정말 삭제하시겠습니까?`)) {
-                            restaurants.splice(indexToDelete, 1);
+                deleteButtons.forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const indexToDelete = parseInt(event.target.dataset.index);
+                        const deletedRestaurantName = userRestaurants[selectedCategory][indexToDelete].name; // 확인 메시지를 위해 이름 가져오기
+
+                        // confirm 대신 모달 사용
+                        showCustomConfirm(`${deletedRestaurantName}을(를) 정말 삭제하시겠습니까??`, () => {
+                            userRestaurants[selectedCategory].splice(indexToDelete, 1); // 객체 삭제
                             saveRestaurants();
                             renderEditList();
                             renderSlotItems();
-                        }
+                        });
                     });
                 });
             }
 
+            // 커스텀 알림 모달
+            function showCustomAlert(message) {
+                const alertModal = document.createElement('div');
+                alertModal.classList.add('modal');
+                alertModal.style.display = 'flex';
+                alertModal.innerHTML = `
+                    <div class="modal-content">
+                        <h2>알림</h2>
+                        <p>${message}</p>
+                        <button class="btn custom-alert-ok-btn">확인</button>
+                    </div>
+                `;
+                document.body.appendChild(alertModal);
+
+                alertModal.querySelector('.custom-alert-ok-btn').addEventListener('click', () => {
+                    document.body.removeChild(alertModal);
+                });
+
+                alertModal.addEventListener('click', (event) => {
+                    if (event.target === alertModal) {
+                        document.body.removeChild(alertModal);
+                    }
+                });
+            }
+
+            // 커스텀 확인 모달
+            function showCustomConfirm(message, onConfirm) {
+                const confirmModal = document.createElement('div');
+                confirmModal.classList.add('modal');
+                confirmModal.style.display = 'flex';
+                confirmModal.innerHTML = `
+                    <div class="modal-content">
+                        <h2>확인</h2>
+                        <p>${message}</p>
+                        <div class="button-container">
+                            <button class="btn custom-confirm-ok-btn">예</button>
+                            <button class="btn custom-confirm-cancel-btn" style="background-color: #6c757d;">아니오</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(confirmModal);
+
+                confirmModal.querySelector('.custom-confirm-ok-btn').addEventListener('click', () => {
+                    onConfirm();
+                    document.body.removeChild(confirmModal);
+                });
+
+                confirmModal.querySelector('.custom-confirm-cancel-btn').addEventListener('click', () => {
+                    document.body.removeChild(confirmModal);
+                });
+
+                confirmModal.addEventListener('click', (event) => {
+                    if (event.target === confirmModal) {
+                        document.body.removeChild(confirmModal);
+                    }
+                });
+            }
+
+
+            // 모달 닫기 버튼 이벤트
             closeButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     addModal.style.display = 'none';
                     editModal.style.display = 'none';
                     helpModal.style.display = 'none';
+                    // 모달이 닫힐 때 편집 목록을 다시 렌더링하여 수정 중인 상태를 초기화
+                    renderEditList();
                 });
             });
 
+            // 모달 외부 클릭 시 닫기
             window.addEventListener('click', (event) => {
                 if (event.target === addModal) {
                     addModal.style.display = 'none';
@@ -785,12 +1139,29 @@
                 }
             });
 
-            loadRestaurants();
-            window.addEventListener('load', () => {
-                if (slotContentWrapper.querySelector('.slot-item')) {
-                    itemHeight = slotContentWrapper.querySelector('.slot-item').offsetHeight;
-                }
+            // 초기 로드 시 실행
+            loadRestaurants(); // 식당 목록 불러오기
+            renderCategoryOptions(); // 카테고리 옵션 렌더링
+            renderSlotItems(); // 초기 슬롯 아이템 렌더링
+
+            // 카테고리 선택 변경 시 이벤트
+            categorySelect.addEventListener('change', () => {
+                localStorage.setItem('selectedCategory', categorySelect.value); // 선택된 카테고리 저장
+                renderSlotItems(); // 선택된 카테고리에 맞춰 슬롯 아이템 다시 렌더링
+                resultText.textContent = ""; // 결과 텍스트 초기화
+                mapButton.style.display = 'none'; // 지도 버튼 숨기기
             });
+
+            // 룰렛 돌리기 버튼 이벤트
+            spinButton.addEventListener('click', spinSlot);
+
+            // 윈도우 로드 시 슬롯 아이템 높이 설정 (초기 렌더링 후)
+            // 이 부분은 renderSlotItems 함수 내에서 더 자주 업데이트되므로 여기서는 제거하거나 초기값 설정용으로만 사용
+            // window.addEventListener('load', () => {
+            //     if (slotContentWrapper.querySelector('.slot-item')) {
+            //         itemHeight = slotContentWrapper.querySelector('.slot-item').offsetHeight;
+            //     }
+            // });
         });
     </script>
 </body>
